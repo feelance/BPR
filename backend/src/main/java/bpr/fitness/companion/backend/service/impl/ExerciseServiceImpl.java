@@ -1,4 +1,4 @@
-package bpr.fitness.companion.backend.service.ExerciseServiceImpl;
+package bpr.fitness.companion.backend.service.impl;
 
 import bpr.fitness.companion.backend.exception.DatabaseConstraintException;
 import bpr.fitness.companion.backend.exception.ExerciseNotFoundException;

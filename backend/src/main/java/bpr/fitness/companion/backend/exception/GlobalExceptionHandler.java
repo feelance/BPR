@@ -24,4 +24,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleDataIntegrityViolationExcecption(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Data integrity violation: " + ex.getMessage());
     }
+
+    @ExceptionHandler(WeekRoutineNotFoundException.class)
+    public ResponseEntity<String> handleWeekRoutineNotFound(WeekRoutineNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }

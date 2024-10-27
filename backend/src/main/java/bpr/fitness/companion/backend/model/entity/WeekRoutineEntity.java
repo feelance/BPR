@@ -10,15 +10,13 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "exercise")
-public class ExerciseEntity {
+@Table(name = "weekroutine")
+public class WeekRoutineEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String userId;
     @Column(unique = true, nullable = false)
     private String name;
-    private String description;
-    private String category;
-    private String imageUrl; // URL or path to the image
+    private String notes;
 }

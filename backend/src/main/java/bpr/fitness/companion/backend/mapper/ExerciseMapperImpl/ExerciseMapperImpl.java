@@ -16,11 +16,11 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         ExerciseEntity exerciseEntity = null;
         if (exercise != null){
             exerciseEntity = new ExerciseEntity();
-            exerciseEntity.setExerciseId(exercise.getId());
+            exerciseEntity.setId(exercise.getId());
             exerciseEntity.setName(exercise.getName());
             exerciseEntity.setDescription(exercise.getDescription());
             exerciseEntity.setCategory(exercise.getCategory());
-            exerciseEntity.setImage(exercise.getImage());
+            exerciseEntity.setImageUrl(exercise.getImage());
         }
         return exerciseEntity;
     }
@@ -42,11 +42,11 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         Exercise exercise = null;
         if (exerciseEntity != null){
             exercise = new Exercise();
-            exercise.setId(exerciseEntity.getExerciseId());
+            exercise.setId(exerciseEntity.getId());
             exercise.setName(exerciseEntity.getName());
             exercise.setDescription(exerciseEntity.getDescription());
             exercise.setCategory(exerciseEntity.getCategory());
-            exercise.setImage(exerciseEntity.getImage());
+            exercise.setImage(exerciseEntity.getImageUrl());
         }
         return exercise;
     }
