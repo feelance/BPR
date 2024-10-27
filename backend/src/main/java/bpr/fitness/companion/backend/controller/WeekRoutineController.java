@@ -55,7 +55,7 @@ public class WeekRoutineController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteWeekRoutine(@PathVariable Long id) {
         weekRoutineService.deleteWeekRoutine(id);
-        return new ResponseEntity<>("WeekRoutine with id " + id + "deleted",HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("WeekRoutine with id " + id + " deleted",HttpStatus.OK);
     }
 }
 
