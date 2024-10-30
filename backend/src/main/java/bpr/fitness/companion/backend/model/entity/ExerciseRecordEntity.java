@@ -12,8 +12,8 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "WEEK_ROUTINE")
-public class WeekRoutineEntity {
+@Table(name = "EXERCISE_RECORD")
+public class ExerciseRecordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,10 +23,9 @@ public class WeekRoutineEntity {
     private String notes;
 
     @OneToMany(mappedBy = "weekRoutine", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DayRoutineEntity> dayRoutines;
+    private Set<ExerciseSeriesEntity> day_routines;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
-
 }

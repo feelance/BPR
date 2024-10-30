@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 @Setter
 @Getter
 @Entity
@@ -21,4 +24,11 @@ public class ExerciseEntity {
     private String description;
     private String category;
     private String imageUrl; // URL or path to the image
+
+
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ExerciseSeriesEntity> exerciseRecords;
+
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExerciseDayRoutineEntity> exerciseDayRoutine;
 }
