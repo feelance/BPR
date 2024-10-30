@@ -10,13 +10,23 @@ import java.util.List;
  */
 public interface DayRoutineMapper {
     /**
-     * Maps DayRoutine
-     * @param weekRoutine
-     * @return
+     * Maps to dayRoutine Entity
+     * @param dayRoutine contains all dayRoutine details
+     * @return DayRoutineEntity
      */
-    DayRoutineEntity mapToDayRoutineEntity(DayRoutine weekRoutine);
+    DayRoutineEntity mapToDayRoutineEntity(DayRoutine dayRoutine);
 
-    List<DayRoutine> mapToDayRoutineList(List<DayRoutineEntity> weekRoutineEntityList);
+    /**
+     * Maps to dayRoutine list
+     * @param dayRoutineEntityList List of DayRoutineEntity
+     * @return List<DayRoutine>
+     */
+    List<DayRoutine> mapToDayRoutineList(List<DayRoutineEntity> dayRoutineEntityList);
 
-    DayRoutine mapToDayRoutine(DayRoutineEntity weekRoutineEntity);
+    /**
+     * Maps to dayRoutine
+     * @param dayRoutineEntity dayRoutine entity
+     * @return DayRoutine
+     */
+    DayRoutine mapToDayRoutine(DayRoutineEntity dayRoutineEntity);
 }

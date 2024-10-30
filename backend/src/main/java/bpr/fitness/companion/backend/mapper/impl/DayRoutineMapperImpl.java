@@ -8,41 +8,58 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Mapper for all dayRoutine operations.
+ */
 @Service
 public class DayRoutineMapperImpl implements DayRoutineMapper {
+    /**
+     * Maps to dayRoutine Entity
+     * @param dayRoutine contains all dayRoutine details
+     * @return DayRoutineEntity
+     */
     @Override
-    public DayRoutineEntity mapToDayRoutineEntity(DayRoutine weekRoutine) {
-        DayRoutineEntity weekRoutineEntity = null;
-        if (weekRoutine != null){
-            weekRoutineEntity = new DayRoutineEntity();
-            weekRoutineEntity.setId(weekRoutine.getId());
-            weekRoutineEntity.setName(weekRoutine.getName());
+    public DayRoutineEntity mapToDayRoutineEntity(DayRoutine dayRoutine) {
+        DayRoutineEntity dayRoutineEntity = null;
+        if (dayRoutine != null){
+            dayRoutineEntity = new DayRoutineEntity();
+            dayRoutineEntity.setId(dayRoutine.getId());
+            dayRoutineEntity.setName(dayRoutine.getName());
 
         }
-        return weekRoutineEntity;
+        return dayRoutineEntity;
     }
 
+    /**
+     * Maps to dayRoutine list
+     * @param dayRoutineEntityList List of DayRoutineEntity
+     * @return List<DayRoutine>
+     */
     @Override
-    public List<DayRoutine> mapToDayRoutineList(List<DayRoutineEntity> weekRoutineEntitieList) {
-        List<DayRoutine> weekRoutineList = null;
-        if (!CollectionUtils.isEmpty(weekRoutineEntitieList)){
-            weekRoutineList = new ArrayList<>();
-            for (DayRoutineEntity weekRoutineEntity : weekRoutineEntitieList){
-                weekRoutineList.add(mapToDayRoutine(weekRoutineEntity));
+    public List<DayRoutine> mapToDayRoutineList(List<DayRoutineEntity> dayRoutineEntityList) {
+        List<DayRoutine> dayRoutineList = null;
+        if (!CollectionUtils.isEmpty(dayRoutineEntityList)){
+            dayRoutineList = new ArrayList<>();
+            for (DayRoutineEntity dayRoutineEntity : dayRoutineEntityList){
+                dayRoutineList.add(mapToDayRoutine(dayRoutineEntity));
             }
         }
-        return weekRoutineList;
+        return dayRoutineList;
     }
 
+    /**
+     * Maps to dayRoutine
+     * @param dayRoutineEntity dayRoutine entity
+     * @return DayRoutine
+     */
     @Override
-    public DayRoutine mapToDayRoutine(DayRoutineEntity weekRoutineEntity) {
-        DayRoutine weekRoutine = null;
-        if (weekRoutineEntity != null){
-            weekRoutine = new DayRoutine();
-            weekRoutine.setId(weekRoutineEntity.getId());
-            weekRoutine.setName(weekRoutineEntity.getName());
+    public DayRoutine mapToDayRoutine(DayRoutineEntity dayRoutineEntity) {
+        DayRoutine dayRoutine = null;
+        if (dayRoutineEntity != null){
+            dayRoutine = new DayRoutine();
+            dayRoutine.setId(dayRoutineEntity.getId());
+            dayRoutine.setName(dayRoutineEntity.getName());
         }
-        return weekRoutine;
+        return dayRoutine;
     }
 }

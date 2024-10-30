@@ -8,11 +8,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+/**
+ * Mapper for all weekRoutine operations
+ */
 public interface WeekRoutineMapper {
+    /**
+     * Maps to weekRoutine Entity
+     * @param weekRoutine contains all weekRoutine details
+     * @return WeekRoutineEntity
+     */
     WeekRoutineEntity mapToWeekRoutineEntity(WeekRoutine weekRoutine);
 
+    /**
+     * Maps to weekRoutine Entity List
+     * @param weekRoutineEntityList list of weekRoutineEntity
+     * @return List<WeekRoutine>
+     */
     List<WeekRoutine> mapToWeekRoutineList(List<WeekRoutineEntity> weekRoutineEntityList);
 
+    /**
+     * Maps to weekRoutine
+     * @param weekRoutineEntity weekRoutineEntity
+     * @return WeekRoutine
+     */
     WeekRoutine mapToWeekRoutine(WeekRoutineEntity weekRoutineEntity);
 }

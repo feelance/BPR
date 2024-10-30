@@ -25,7 +25,7 @@ public class DayRoutineController {
 
     /**
      * Create a new dayRoutine
-     * @param dayRoutine contains all day routines parameters
+     * @param dayRoutine contains all dayRoutine parameters
      * @return DayRoutine
      */
     @PostMapping
@@ -45,7 +45,7 @@ public class DayRoutineController {
 
     /**
      * Get a dayRoutine by id
-     * @param id id of the dayRoutine
+     * @param id of the dayRoutine
      * @return DayRoutine
      */
     @GetMapping("/{id}")

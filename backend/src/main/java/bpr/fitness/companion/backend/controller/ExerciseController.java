@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This class will contain all exercise operations
+ */
 @RestController
 @RequestMapping("/exercises")
 public class ExerciseController {
@@ -20,20 +23,31 @@ public class ExerciseController {
         this.exerciseService = exerciseService;
     }
 
-    // Create a new exercise
+    /**
+     * Create a new exercise
+     * @param exercise contains all exercise details
+     * @return Exercise
+     */
     @PostMapping
     public ResponseEntity<Exercise> createExercise(@RequestBody Exercise exercise) {
         Exercise savedExercise = exerciseService.createExercise(exercise);
         return new ResponseEntity<>(savedExercise, HttpStatus.CREATED);
     }
 
-    // Get all exercises
+    /**
+     * Get  all exercises
+     * @return List<Exercise>
+     */
     @GetMapping
     public List<Exercise> getAllExercises() {
         return exerciseService.getAllExercises();
     }
 
-    // Get an exercise by ID
+    /**
+     * Get an exercise by id
+     * @param id of the exercise
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Exercise> getExerciseById(@PathVariable Long id) {
         Exercise exercise = exerciseService.getExerciseById(id);
@@ -44,14 +58,23 @@ public class ExerciseController {
         }
     }
 
-    // Update an existing exercise
+    /**
+     * Update an existing exercise
+     * @param id of the exercise we want to update
+     * @param exerciseDetails object that contains all details that we want to update
+     * @return Exercise
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Exercise> updateExercise(@PathVariable Long id, @RequestBody Exercise exerciseDetails) {
         Exercise updatedExercise = exerciseService.updateExercise(id, exerciseDetails);
         return new ResponseEntity<>(updatedExercise, HttpStatus.OK);
     }
 
-    // Delete an exercise
+    /**
+     * Delete an exercise by id
+     * @param id of the exercise we want to delete
+     * @return confirmation message
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteExercise(@PathVariable Long id) {
         exerciseService.deleteExercise(id);

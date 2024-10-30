@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This class will contain all weekRoutine operations
+ */
 @RestController
 @RequestMapping("/weekroutines")
 public class WeekRoutineController {
@@ -20,20 +23,31 @@ public class WeekRoutineController {
         this.weekRoutineService = weekRoutineService;
     }
 
-    // Create a new weekRoutine
+    /**
+     * Create a new weekRoutine
+     * @param weekRoutine contains all week routines parameters
+     * @return WeekRoutine
+     */
     @PostMapping
     public ResponseEntity<WeekRoutine> createWeekRoutine(@RequestBody WeekRoutine weekRoutine) {
         WeekRoutine savedWeekRoutine = weekRoutineService.createWeekRoutine(weekRoutine);
         return new ResponseEntity<>(savedWeekRoutine, HttpStatus.CREATED);
     }
 
-    // Get all weekRoutines
+    /**
+     * Get all weekRoutines
+     * @return List<WeekRoutine>
+     */
     @GetMapping
     public List<WeekRoutine> getAllWeekRoutines() {
         return weekRoutineService.getAllWeekRoutines();
     }
 
-    // Get an weekRoutine by ID
+    /**
+     * Get a weekRoutine by id
+     * @param id of the weekRoutine
+     * @return WeekRoutine
+     */
     @GetMapping("/{id}")
     public ResponseEntity<WeekRoutine> getWeekRoutineById(@PathVariable Long id) {
         WeekRoutine weekRoutine = weekRoutineService.getWeekRoutineById(id);
@@ -44,14 +58,23 @@ public class WeekRoutineController {
         }
     }
 
-    // Update an existing weekRoutine
+    /**
+     * Update an existing weekRoutine
+     * @param id of the weekRoutine we want to update
+     * @param weekRoutineDetails object that contains all details that we want to update
+     * @return WeekRoutine
+     */
     @PutMapping("/{id}")
     public ResponseEntity<WeekRoutine> updateWeekRoutine(@PathVariable Long id, @RequestBody WeekRoutine weekRoutineDetails) {
         WeekRoutine updatedWeekRoutine = weekRoutineService.updateWeekRoutine(id, weekRoutineDetails);
         return new ResponseEntity<>(updatedWeekRoutine, HttpStatus.OK);
     }
 
-    // Delete an weekRoutine
+    /**
+     * Delete a weekRoutine by id
+     * @param id of the weekRoutine we want to delete
+     * @return confirmation message
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteWeekRoutine(@PathVariable Long id) {
         weekRoutineService.deleteWeekRoutine(id);

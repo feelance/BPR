@@ -9,8 +9,16 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapper for all weekRoutine operations
+ */
 @Service
 public class WeekRoutineMapperImpl implements WeekRoutineMapper {
+    /**
+     * Maps to weekRoutine Entity
+     * @param weekRoutine contains all weekRoutine details
+     * @return WeekRoutineEntity
+     */
     @Override
     public WeekRoutineEntity mapToWeekRoutineEntity(WeekRoutine weekRoutine) {
         WeekRoutineEntity weekRoutineEntity = null;
@@ -22,19 +30,28 @@ public class WeekRoutineMapperImpl implements WeekRoutineMapper {
         }
         return weekRoutineEntity;
     }
-
+    /**
+     * Maps to weekRoutine Entity List
+     * @param weekRoutineEntityList list of weekRoutineEntity
+     * @return List<WeekRoutine>
+     */
     @Override
-    public List<WeekRoutine> mapToWeekRoutineList(List<WeekRoutineEntity> weekRoutineEntitieList) {
+    public List<WeekRoutine> mapToWeekRoutineList(List<WeekRoutineEntity> weekRoutineEntityList) {
         List<WeekRoutine> weekRoutineList = null;
-        if (!CollectionUtils.isEmpty(weekRoutineEntitieList)){
+        if (!CollectionUtils.isEmpty(weekRoutineEntityList)){
             weekRoutineList = new ArrayList<>();
-            for (WeekRoutineEntity weekRoutineEntity : weekRoutineEntitieList){
+            for (WeekRoutineEntity weekRoutineEntity : weekRoutineEntityList){
                 weekRoutineList.add(mapToWeekRoutine(weekRoutineEntity));
             }
         }
         return weekRoutineList;
     }
 
+    /**
+     * Maps to weekRoutine
+     * @param weekRoutineEntity weekRoutineEntity
+     * @return WeekRoutine
+     */
     @Override
     public WeekRoutine mapToWeekRoutine(WeekRoutineEntity weekRoutineEntity) {
         WeekRoutine weekRoutine = null;

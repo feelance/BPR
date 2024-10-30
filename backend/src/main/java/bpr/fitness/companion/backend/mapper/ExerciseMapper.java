@@ -6,11 +6,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+/**
+ * Mapper for all exercise operations
+ */
 public interface ExerciseMapper {
+    /**
+     * Maps to exercise Entity
+     * @param exercise contains all exercise details
+     * @return ExerciseEntity
+     */
     ExerciseEntity mapToExerciseEntity(Exercise exercise);
 
-    List<Exercise> mapToExerciseList(List<ExerciseEntity> exerciseEntitieList);
+    /**
+     * Maps to exercise Entity List
+     * @param exerciseEntityList list of exerciseEntity
+     * @return List<Exercise>
+     */
+    List<Exercise> mapToExerciseList(List<ExerciseEntity> exerciseEntityList);
 
+    /**
+     * Maps to exercise
+     * @param exerciseEntity exerciseEntity
+     * @return Exercise
+     */
     Exercise mapToExercise(ExerciseEntity exerciseEntity);
 }

@@ -14,11 +14,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Exercise Service
+ */
 @Service
 public class ExerciseServiceImpl implements ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
     private final ExerciseMapper mapper;
+
 
     @Autowired
     public ExerciseServiceImpl(ExerciseRepository exerciseRepository, ExerciseMapper mapper) {
@@ -26,6 +30,11 @@ public class ExerciseServiceImpl implements ExerciseService {
         this.mapper = mapper;
     }
 
+    /**
+     * Create Exercise
+     * @param exercise contains all exercise details
+     * @return Exercise
+     */
     @Override
     public Exercise createExercise(Exercise exercise) throws DatabaseConstraintException {
         try{

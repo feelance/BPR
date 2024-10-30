@@ -9,8 +9,16 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapper for all exercise operations
+ */
 @Service
 public class ExerciseMapperImpl implements ExerciseMapper {
+    /**
+     * Maps to exercise Entity
+     * @param exercise contains all exercise details
+     * @return ExerciseEntity
+     */
     @Override
     public ExerciseEntity mapToExerciseEntity(Exercise exercise) {
         ExerciseEntity exerciseEntity = null;
@@ -25,18 +33,28 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         return exerciseEntity;
     }
 
+    /**
+     * Maps to exercise Entity List
+     * @param exerciseEntityList list of exerciseEntity
+     * @return List<Exercise>
+     */
     @Override
-    public List<Exercise> mapToExerciseList(List<ExerciseEntity> exerciseEntitieList) {
+    public List<Exercise> mapToExerciseList(List<ExerciseEntity> exerciseEntityList) {
         List<Exercise> exerciseList = null;
-        if (!CollectionUtils.isEmpty(exerciseEntitieList)){
+        if (!CollectionUtils.isEmpty(exerciseEntityList)){
             exerciseList = new ArrayList<>();
-            for (ExerciseEntity exerciseEntity : exerciseEntitieList){
+            for (ExerciseEntity exerciseEntity : exerciseEntityList){
                 exerciseList.add(mapToExercise(exerciseEntity));
             }
         }
         return exerciseList;
     }
 
+    /**
+     * Maps to exercise
+     * @param exerciseEntity exerciseEntity
+     * @return Exercise
+     */
     @Override
     public Exercise mapToExercise(ExerciseEntity exerciseEntity) {
         Exercise exercise = null;
