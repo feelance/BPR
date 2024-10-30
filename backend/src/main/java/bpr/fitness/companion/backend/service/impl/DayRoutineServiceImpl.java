@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Day routine service
+ */
 @Service
 public class DayRoutineServiceImpl implements DayRoutineService {
 
@@ -25,7 +28,11 @@ public class DayRoutineServiceImpl implements DayRoutineService {
         this.DayRoutineRepository = DayRoutineRepository;
         this.mapper = mapper;
     }
-
+    /**
+     * Create day routine
+     * @param DayRoutine contains all dayRoutine details
+     * @return DayRoutine
+     */
     @Override
     public DayRoutine createDayRoutine(DayRoutine DayRoutine) throws DatabaseConstraintException {
         try{
@@ -38,12 +45,21 @@ public class DayRoutineServiceImpl implements DayRoutineService {
 
     }
 
+    /**
+     * Get all day routines
+     * @return List<DayRoutine>
+     */
     @Override
     public List<DayRoutine> getAllDayRoutines() {
-        List<DayRoutineEntity> DayRoutineEntitieList = DayRoutineRepository.findAll();
-        return mapper.mapToDayRoutineList(DayRoutineEntitieList);
+        List<DayRoutineEntity> DayRoutineEntityList = DayRoutineRepository.findAll();
+        return mapper.mapToDayRoutineList(DayRoutineEntityList);
     }
 
+    /**
+     * Get day routine by id
+     * @param id of the day routine we want to get
+     * @return DayRoutine
+     */
     @Override
     public DayRoutine getDayRoutineById(Long id) {
         Optional<DayRoutineEntity> optDayRoutineEntity = DayRoutineRepository.findById(id);
@@ -55,21 +71,24 @@ public class DayRoutineServiceImpl implements DayRoutineService {
         return DayRoutine;
     }
 
+
     @Override
-    public DayRoutine updateDayRoutine(Long id, DayRoutine DayRoutineDetails) throws DayRoutineNotFoundException{
+    public DayRoutine updateDayRoutine(Long id, DayRoutine dayRoutineDetails) throws DayRoutineNotFoundException{
         Optional <DayRoutineEntity> optDayRoutineEntity = DayRoutineRepository.findById(id);
-        DayRoutineEntity DayRoutineEntity = null;
-        DayRoutine DayRoutine = null;
+        DayRoutineEntity dayRoutineEntity = null;
         if (optDayRoutineEntity.isPresent()){
-            DayRoutineDetails.setId(id);
-            DayRoutineEntity = mapper.mapToDayRoutineEntity(DayRoutineDetails);
-            DayRoutineRepository.save(DayRoutineEntity);
+            dayRoutineDetails.setId(id);
+            dayRoutineEntity = mapper.mapToDayRoutineEntity(dayRoutineDetails);
+            DayRoutineRepository.save(dayRoutineEntity);
         } else {
             throw new DayRoutineNotFoundException("DayRoutine with id " + id + "not found");
         }
-        return mapper.mapToDayRoutine(DayRoutineEntity);
+        return mapper.mapToDayRoutine(dayRoutineEntity);
     }
-
+    /**
+     * Delete day routine
+     * @param id of the dayRoutine we want to delete
+     */
     @Override
     public void deleteDayRoutine(Long id) {
         if (!DayRoutineRepository.existsById(id)) {

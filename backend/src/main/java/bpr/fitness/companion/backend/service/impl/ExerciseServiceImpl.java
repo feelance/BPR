@@ -46,13 +46,20 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
 
     }
-
+    /**
+     * Get all exercises
+     * @return List<Exercise>
+     */
     @Override
     public List<Exercise> getAllExercises() {
         List<ExerciseEntity> exerciseEntitieList = exerciseRepository.findAll();
         return mapper.mapToExerciseList(exerciseEntitieList);
     }
-
+    /**
+     * Get exercise by id
+     * @param id of the exercise we want to get
+     * @return Exercise
+     */
     @Override
     public Exercise getExerciseById(Long id) {
         Optional<ExerciseEntity> optExerciseEntity = exerciseRepository.findById(id);
@@ -63,12 +70,16 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
         return exercise;
     }
-
+    /**
+     * Update exercise
+     * @param id of the exercise we want to update
+     * @param exerciseDetails contains all the exercise details
+     * @return Exercise
+     */
     @Override
     public Exercise updateExercise(Long id, Exercise exerciseDetails) throws ExerciseNotFoundException{
         Optional <ExerciseEntity> optExerciseEntity = exerciseRepository.findById(id);
         ExerciseEntity exerciseEntity = null;
-        Exercise exercise = null;
         if (optExerciseEntity.isPresent()){
             exerciseDetails.setId(id);
             exerciseEntity = mapper.mapToExerciseEntity(exerciseDetails);
@@ -78,7 +89,10 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
         return mapper.mapToExercise(exerciseEntity);
     }
-
+    /**
+     * Delete exercise by id
+     * @param id of the exercise we want to delete
+     */
     @Override
     public void deleteExercise(Long id) {
         if (!exerciseRepository.existsById(id)) {

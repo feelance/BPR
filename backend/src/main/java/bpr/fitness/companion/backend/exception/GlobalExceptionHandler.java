@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+    
     @ExceptionHandler(ExerciseNotFoundException.class)
     public ResponseEntity<String> handleExerciseNotFound(ExerciseNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
