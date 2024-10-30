@@ -7,6 +7,9 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * Global exception handler that will handle all custom exceptions that are thrown by the controllers automatically.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
