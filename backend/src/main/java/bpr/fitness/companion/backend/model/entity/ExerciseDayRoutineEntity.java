@@ -3,16 +3,10 @@ package bpr.fitness.companion.backend.model.entity;
 import bpr.fitness.companion.backend.model.dto.DayRoutine;
 import bpr.fitness.companion.backend.model.dto.Exercise;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Setter
-@Getter
+@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "EXERCISE_DAY_ROUTINE")
 public class ExerciseDayRoutineEntity {
 

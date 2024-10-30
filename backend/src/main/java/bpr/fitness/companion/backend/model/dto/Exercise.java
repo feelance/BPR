@@ -1,22 +1,18 @@
 package bpr.fitness.companion.backend.model.dto;
 
 
-import bpr.fitness.companion.backend.model.entity.ExerciseDayRoutineEntity;
-import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
+import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 public class Exercise {
     private Long id;
     private String name;
     private String description;
     private String category;
-    private String image;
+    private String imageUrl;
 
-    @OneToMany(mappedBy = "exercise")
-    private Set<ExerciseDayRoutineEntity> exercises;
+    private Set<Long> exerciseRecords;
+    private List<Long> exerciseDayRoutine;
 }

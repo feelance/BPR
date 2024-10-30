@@ -1,17 +1,11 @@
 package bpr.fitness.companion.backend.model.entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
-@Setter
-@Getter
+@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "DAY_ROUTINE")
 public class DayRoutineEntity {
     @Id
