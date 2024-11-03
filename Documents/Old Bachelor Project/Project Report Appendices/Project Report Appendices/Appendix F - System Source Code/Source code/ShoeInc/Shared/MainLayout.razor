@@ -1,0 +1,36 @@
+
+@using ShoeInc.Data
+@using ShoeInc.Data.DBContext
+@using Microsoft.EntityFrameworkCore
+@inherits LayoutComponentBase
+@inject LoginCredentials credentials
+@inject NavigationManager NavigationManager
+@inject ShoeIncContext ContextFactory
+
+
+<RadzenDialog/>
+<RadzenNotification/>
+<RadzenContextMenu/>
+<RadzenTooltip/>
+
+<div class="page">
+    <div class="sidebar backgroundcolor">
+        <NavMenu/>
+    </div>
+
+    <div class="main backgroundcolor">
+        <div class="top-row px-4 auth topnavbar ">
+            <LoginDisplay/>
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,210 @@
+﻿@page "/ListOfProducts"
+
+@inject NavigationManager NavigationManager; 
+@using ShoeInc.Data
+@using ShoeInc.Repositories.Products
+@using ShoeInc.Services.OrderService
+@using ShoeInc.Services.ProductService
+@inject ShoeIncContext Context
+@inject ProductService ProductService
+@inject OrderService OrderService
+
+<!-- Author: Florin Bordei --> 
+
+<h3>Your current list of products: </h3>
+
+@if (_products == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{   
+    <!-- Radzen component that displays the list of products obtained from the db. 
+    At the bottom of the component we can observe the edit, delete and remove discounts (renew) options. 
+    The discount is applied when the product is edited and a value is given to the discount field  -->
+    
+    
+    <RadzenButton Click="@OnAddProduct" Text="Add product" Icon="check_circle" ButtonStyle="ButtonStyle.Success" />
+
+    <RadzenDataGrid @ref="_productsGrid" AllowFiltering="true" AllowPaging="true" PageSize="14" AllowSorting="true"
+                     EditMode="DataGridEditMode.Single" Data="@_products" TItem="Product" RowUpdate="@OnUpdateRow" >
+            <Columns>
+                <RadzenDataGridColumn TItem="Product" Property="Product.Brand" Title="Brand" Width="100px" >
+                    <EditTemplate Context="product">
+                        <RadzenTextBox style="width: 100%;display: block" Name="Brand" @bind-Value="product.Brand" />
+
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+                
+                <RadzenDataGridColumn TItem="Product" Property="Product.Model" Title="Model" Width="100px" >
+                    <EditTemplate Context="product">
+                        <RadzenTextBox style="width: 100%;display: block" Name="Model" @bind-Value="product.Model" />
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+                
+                <RadzenDataGridColumn TItem="Product" Property="Product.ModelCode" Title="ModelCode" Width="125px" >
+                    <EditTemplate Context="product">
+                        <RadzenTextBox style="width: 100%;display: block" Name="ModelCode" @bind-Value="product.ModelCode" />
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+                
+                <RadzenDataGridColumn TItem="Product" Property="Product.Description" Title="Description" Width="125px"  >
+                    <EditTemplate Context="product">
+                        <RadzenTextBox style="width: 100%;display: block" Name="Description" @bind-Value="product.Description"/>
+                    </EditTemplate>
+                    </RadzenDataGridColumn>
+
+
+                <RadzenDataGridColumn TItem="Product" Property="Product.Price" Title="Price" Width="100px" >
+                    <EditTemplate Context="product">
+                <RadzenNumeric Placeholder="300" style="width: 100%; display: block" @bind-Value="product.Price" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Product" Property="Product.Discount" Title="Discount" Width="120px" >
+                    <EditTemplate Context="product">
+                <RadzenNumeric Placeholder="300" style="width: 100%; display: block" @bind-Value="product.Discount" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                
+                 <RadzenDataGridColumn TItem="Product" Property="Product.ImageUrl" Title="Picture" Width="120px">
+                     <Template Context="product">
+                         <RadzenImage Path="@product.ImageUrl" style="width: 32px; height: 32px; border-radius: 16px; margin-right: 6px;"/>
+                     </Template>
+                    
+                            </RadzenDataGridColumn>
+                
+
+                
+                <RadzenDataGridColumn TItem="Product" Context="products" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                    <Template Context="product">
+                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(product))" @onclick:stopPropagation="true">
+                        </RadzenButton>
+                        
+                    </Template>
+                    <EditTemplate Context="product">
+                        <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(product))">
+                        </RadzenButton>
+                        <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(product))">
+                        </RadzenButton>
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+                
+                
+                <RadzenDataGridColumn TItem="Product" Context="product" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+                    <Template Context="product">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(args => DeleteRow(product))" @onclick:stopPropagation="true">
+                        </RadzenButton>
+                        </Template>
+                    <EditTemplate Context="product">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(args => DeleteRow(product))">
+                        </RadzenButton>
+                    </EditTemplate>
+                    </RadzenDataGridColumn>
+                    
+                    <RadzenDataGridColumn TItem="Product" Context="product" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+                        <Template Context="product">
+                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="autorenew" Size="ButtonSize.Small" Class="m-1" Click="@(args => RemoveDiscount(product.Discount, product.ModelCode))" @onclick:stopPropagation="true">
+                            </RadzenButton>
+                        </Template>
+                        <EditTemplate Context="product">
+                            
+                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="autorenew" Size="ButtonSize.Small" Class="m-1" Click="@(args => RemoveDiscount(product.Discount, product.ModelCode))">
+                            </RadzenButton>
+                        </EditTemplate>
+                        </RadzenDataGridColumn>
+                
+                
+             
+                
+                
+            </Columns>
+        </RadzenDataGrid>
+}
+
+@code {
+
+    RadzenDataGrid<Product> _productsGrid;
+    private IList<Product> _products;
+    private ProductRepository _productRepository; 
+
+    protected override async Task OnInitializedAsync()
+    {
+         _productRepository = new ProductRepository(Context);
+        _products =  (IList<Product>) await _productRepository.GetAllProductsAsync();
+
+    }
+
+ 
+
+    private void OnAddProduct()
+    {
+        NavigationManager.NavigateTo("/imageproduct");
+    }
+    
+// when OnUpdateRow method is called the product is updated in the db and in the grid of the Radzen component 
+    async void OnUpdateRow(Product product)
+    {
+        if (product.Discount != 0)
+        {
+      
+            _productRepository.UpdateProduct(product);
+            await ProductService.ApplyDiscount(product.ModelCode, product.Discount);
+            NavigationManager.NavigateTo(NavigationManager.Uri, true);
+
+        }
+        else
+        {
+            _productRepository.UpdateProduct(product);
+        }
+        
+
+    }
+
+    // when DeleteRow method is called the product is deleted in the db and in the grid of the Radzen component 
+
+    async Task  DeleteRow(Product product)
+    {
+        if (_products.Contains(product))
+        {
+            _productRepository.DeleteProduct(product);
+            _products.Remove(product);
+            await _productsGrid.Reload();
+        }
+        else
+        {
+            _productsGrid.CancelEditRow(product);
+        }
+        
+    }
+
+    async Task EditRow(Product product)
+    {
+        await _productsGrid.EditRow(product);
+
+    }
+
+    async Task  SaveRow(Product value)
+    {
+
+        await _productsGrid.UpdateRow(value);
+
+    }
+
+    private void CancelEdit(Product value)
+    {
+        _productsGrid.CancelEditRow(value);
+    }
+
+    // when RemoveDiscount method is called, the product returns to its original Price value 
+    // logic resides in the ProductService 
+    async void RemoveDiscount(decimal productDiscount, string productModelCode)
+    {
+        await ProductService.RemoveDiscount( productModelCode,  productDiscount);
+        NavigationManager.NavigateTo(NavigationManager.Uri, true);
+
+    }
+
+}

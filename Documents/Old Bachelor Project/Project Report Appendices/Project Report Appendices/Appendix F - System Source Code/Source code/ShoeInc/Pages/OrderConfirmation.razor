@@ -1,0 +1,43 @@
+@page "/orderconfirmation"
+@inject NavigationManager NavManager;
+
+<div class="">
+  
+    <div class="container-fluid col-8">
+
+
+
+        <br>
+        <div class="row">
+            <div class="col-8  h2">
+                Hello,
+                Thanks for your order. We’ll let you know once your item(s) have dispatched. Your delivery will arrive in two working days. You can view the status of your order or make changes to it by visiting Your Orders on Shoeinc.com
+            </div>
+            <td class="col-4">
+                                           <button class="btn btn-primary" id="button"  @onclick="(()=> continueShopping())">Continue Shopping</button></td>
+        </div>
+        
+        <br/>
+        <div class="row">
+
+
+            <div class="col-12">
+                <img class="img-fluid"src="img/ShoeIncImage.jpg"/>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+@code
+{
+    public void continueShopping()
+    {
+        NavManager.NavigateTo("/shop");
+    }
+}
+
+

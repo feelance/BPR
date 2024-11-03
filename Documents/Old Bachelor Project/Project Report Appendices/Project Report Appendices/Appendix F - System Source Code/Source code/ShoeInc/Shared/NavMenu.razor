@@ -1,0 +1,89 @@
+﻿
+
+
+<div class="top-row pl-4 navbar topnavbar">
+    <a class="navbar-brand" href="">ShoeInc</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+       
+        
+        <AuthorizeView Roles="Customer">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="MyShoppingCart">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Shopping Cart
+                </NavLink>
+            </li>
+
+
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="Shop">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Shop
+                </NavLink>
+            </li>
+        </AuthorizeView>
+
+        <!-- Authorized View for the Warehouse Manager  --> 
+        
+        <AuthorizeView Roles="WarehouseManager">
+            
+            <li class="nav-item px-3">
+            <NavLink class="nav-link" href="warehousestocks">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Stocks
+            </NavLink>
+        </li>
+         </AuthorizeView>
+
+        <!-- Authorized View for the Company Manager  --> 
+
+        <AuthorizeView Roles="CompanyManager">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="ListOfProducts">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Products
+                </NavLink>
+            </li>
+        
+        
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="ListOfUsers">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Users
+                </NavLink>
+            </li>
+            
+              <li class="nav-item px-3">
+                            <NavLink class="nav-link" href="shop">
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> Shop
+                            </NavLink>
+                        </li>
+        </AuthorizeView>
+        
+        
+        
+        
+        
+
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+}
+

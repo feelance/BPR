@@ -1,0 +1,110 @@
+@page "/warehouseaddproduct"
+@using ShoeInc.Data
+@using ShoeInc.Repositories.Products
+@inject ProductRepository ProductRepository
+@inject NavigationManager NavigationManager; 
+@inject DialogService DialogService
+
+<!-- Author: Florin Bordei --> 
+
+
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+
+
+<!-- Radzen component where all the attributes of the new Product object are binded. 
+Due to business limitations, the warehouse manager is not able to add an image of the product or description --> 
+
+<RadzenTemplateForm Data="@Product" Submit="@((Product product) => { Submit(product); })">
+        <div class="row">
+        <div class="col-md-6">
+            <RadzenFieldset Text="Add a new product ">
+              
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Brand" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Brand" @bind-Value="Product.Brand" />
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                      <div class="col-md-4 align-items-center d-flex">
+                          <RadzenLabel Text="Model" />
+                          </div>
+                      <div class="col-md-8">
+                          <RadzenTextBox style="width: 100%;" Name="Model" @bind-Value="Product.Model" />
+                          </div>
+                      </div>
+            
+                
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="ModelCode" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="ModelCode" @bind-Value="Product.ModelCode" />
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Stock Level" />
+                    </div>
+                    <div class="col-md-3">
+                        <RadzenNumeric Placeholder="300" style="width: 100%;" Name="Stock Level" @bind-Value="Product.StockLevel" />
+                    </div>   
+                </div>
+                
+                
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Price" />
+                    </div>
+                    <div class="col-md-3">
+                        <RadzenNumeric Placeholder="300" style="width: 100%;" Name="Price" @bind-Value="Product.Price" />
+                    </div>   
+                </div>
+                
+                
+            </RadzenFieldset>
+            <div class="row justify-content-center">
+                <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+                    <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" style="display: inline-block; margin-left: 10px;" />
+                    <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
+                </div>
+            </div>
+            
+            
+        </div>
+        </div>
+    </RadzenTemplateForm>
+
+
+
+@code {
+    
+    // new Product object instantiated and all properties are bind valued in the Radzen Component 
+    
+    private Product Product { get; set; } = new Product();
+
+    private void Submit(Product product)
+    {
+        // new Product object stored in db through the call of CreateProduct method from ProductRepository 
+        
+        ProductRepository.CreateProduct(product);
+        NavigationManager.NavigateTo("/warehousestocks");    }
+
+    private void Cancel()
+    {
+        // If user cancels, it will be redirected to Management - Products page 
+        
+        NavigationManager.NavigateTo("/warehousestocks");    }
+
+}

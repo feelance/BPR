@@ -1,0 +1,174 @@
+﻿@page "/warehousestocks"
+
+@inject NavigationManager NavigationManager; 
+@using ShoeInc.Data
+@using ShoeInc.Repositories.Products
+@using ShoeInc.Services.OrderService
+@using ShoeInc.Services.ProductService
+@inject ShoeIncContext ContextFactory
+@inject ProductService ProductService
+@inject NotificationService NotificationService
+@inject OrderService OrderService
+
+<!-- Author: Florin Bordei --> 
+
+
+<h1>Your current list of products: </h1>
+
+
+@if (_products == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{     // if any product is below stock limit, the notification appears => some of the products are close to be out of stock 
+    @if (OutOfStockWarning)
+    {
+        <RadzenButton Text="Low stock warning notification" Style="margin-bottom: 20px; width: 300px" ButtonStyle="ButtonStyle.Warning" Click=@(args => ShowNotification(new NotificationMessage {Severity = NotificationSeverity.Warning, Summary = "Products out of stock", Detail = "Highlighted products must be ordered soon to avoid out of stock", Duration = 4000}))/>
+    }
+
+    // if all products stockLevels are above the stock limits, the notification appears => all products are in stock 
+    @if (!OutOfStockWarning)
+    {
+        <RadzenButton Text="All products are in stock" Style="margin-bottom: 20px; width: 300px"
+                      ButtonStyle="ButtonStyle.Success"
+                      Click=@(args => ShowNotification(new NotificationMessage {Severity = NotificationSeverity.Success, Summary = "", Detail = "There are no products out of stock", Duration = 4000}))/>
+
+    }
+    
+    <!-- Radzen Component that lists all products from the stocks 
+    User can select multiple products to change their stockLevels or delete them--> 
+
+    <RadzenDataGrid AllowFiltering="true" AllowPaging="true" PageSize="14" AllowSorting="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    Data="@_products" TItem="Product" SelectionMode="DataGridSelectionMode.Multiple" @bind-Value="@_selectedProducts" ColumnWidth="200px" RowRender="@RowRender" CellRender="@CellRender">
+        <Columns>
+            <RadzenDataGridColumn TItem="Product" Property="Brand" Title="Brand"/>
+            
+            <RadzenDataGridColumn TItem="Product" Property="Model" Title="Model"/>
+            
+            <RadzenDataGridColumn TItem="Product" Property="Product.ModelCode" Title="ModelCode"/>
+            
+            <RadzenDataGridColumn TItem="Product" Property="Product.Price" Title="Price"/>
+
+
+            <RadzenDataGridColumn TItem="Product" Property="StockLevel" Title="StockLevel">
+
+                <Template Context="data">
+                    @if (data.StockLevel < 200)
+                    {
+                        <span style='color:white'>@data.StockLevel</span>
+                    }
+                    else
+                    {
+                        <span style='color:black'>@data.StockLevel</span>
+                    }
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+        
+    </RadzenDataGrid>
+    
+    <RadzenButton Click="@OrderProducts" Icon="add_circle_outline" Text="Order" ButtonStyle="ButtonStyle.Secondary" />
+    <RadzenButton Click="@DeleteProduct" Text="Remove" ButtonStyle="ButtonStyle.Danger" />
+    <RadzenButton Click="@OnAddProduct" Text="Add product" Icon="check_circle" ButtonStyle="ButtonStyle.Success" />
+
+
+}
+
+@code{
+
+
+    IList<Product> _selectedProducts;
+
+    private IList<Product> _products;
+
+    private bool OutOfStockWarning { get; set; }
+
+    private ProductRepository productRepository; 
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        OutOfStockWarning = await ProductService.CheckOutOfStock();
+
+        productRepository = new ProductRepository(ContextFactory);
+
+        _products = (IList<Product>) await productRepository.GetAllProductsAsync();
+        _selectedProducts = _products.Take(1).ToList();
+
+       
+    }
+
+    // changes the row (font) if the product stockLevel is bellow 200 units 
+    void RowRender(RowRenderEventArgs<Product> args)
+    {
+        args.Attributes.Add("style", $"font-weight: {(args.Data.StockLevel < 200 ? "bold" : "normal")};");
+    }
+
+    // changes the cell (background color) if the product stockLevel is bellow 200 units 
+    void CellRender(DataGridCellRenderEventArgs<Product> args)
+    {
+        if (args.Column.Property == "StockLevel")
+        {
+            args.Attributes.Add("style", $"background-color: {(args.Data.StockLevel < 200 ? "red" : "white")};");
+
+            if (args.Data.StockLevel == 0)
+            {
+                args.Attributes.Add("colspan", 2);
+            }
+        }
+
+
+    }
+
+
+
+    private void OnAddProduct()
+    {
+        NavigationManager.NavigateTo("/warehouseaddproduct");
+    }
+
+    // product is deleted from the db and the list is refreshed 
+    private async void DeleteProduct()
+    {
+        productRepository = new ProductRepository(ContextFactory);
+
+
+        foreach (var p in _selectedProducts)
+        {
+            await productRepository.DeleteProductByModelCode(p.ModelCode);
+
+        }
+
+        NavigationManager.NavigateTo(NavigationManager.Uri, true);
+
+
+    }
+
+
+
+// selected product has its stockLevel updated 
+    
+    private async void OrderProducts()
+    {
+        foreach (var p in _selectedProducts)
+        {
+            await ProductService.OrderProduct(p.ModelCode);
+
+        }
+        NavigationManager.NavigateTo(NavigationManager.Uri, true);
+        
+    }
+
+    void ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+
+    }
+
+}
+
+
+
