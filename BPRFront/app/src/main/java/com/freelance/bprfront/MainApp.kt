@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.freelance.bprfront.adapter.WeekRoutineAdapter
 import com.freelance.bprfront.databinding.ActivityNavigationMenuBinding
+import com.freelance.bprfront.model.WeekRoutine
 
 class MainApp : AppCompatActivity() {
 
@@ -14,6 +18,8 @@ class MainApp : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         binding = ActivityNavigationMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -29,6 +35,18 @@ class MainApp : AppCompatActivity() {
             )
         )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Sample data
+        val weekRoutines = listOf(
+            WeekRoutine("Routine 1", "Notes for routine 1"),
+            WeekRoutine("Routine 2", "Notes for routine 2"),
+            WeekRoutine("Routine 3", "Notes for routine 3")
+        )
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = WeekRoutineAdapter(weekRoutines)
+        recyclerView.adapter = adapter
         navView.setupWithNavController(navController)
     }
 }
