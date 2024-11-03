@@ -34,19 +34,7 @@ class MainApp : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // Sample data
-        val weekRoutines = listOf(
-            WeekRoutine("Routine 1", "Notes for routine 1"),
-            WeekRoutine("Routine 2", "Notes for routine 2"),
-            WeekRoutine("Routine 3", "Notes for routine 3")
-        )
-
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = WeekRoutineAdapter(weekRoutines)
-        recyclerView.adapter = adapter
         navView.setupWithNavController(navController)
     }
 }

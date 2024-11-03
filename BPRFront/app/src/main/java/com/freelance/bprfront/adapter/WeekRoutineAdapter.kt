@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.freelance.bprfront.R
 import com.freelance.bprfront.model.WeekRoutine
 
-class WeekRoutineAdapter(private val weekRoutineList: List<WeekRoutine>) : RecyclerView.Adapter<WeekRoutineAdapter.WeekRoutineViewHolder>() {
+class WeekRoutineAdapter(private var weekRoutineList: List<WeekRoutine>) : RecyclerView.Adapter<WeekRoutineAdapter.WeekRoutineViewHolder>() {
 
     class WeekRoutineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.routineName)
@@ -24,6 +24,11 @@ class WeekRoutineAdapter(private val weekRoutineList: List<WeekRoutine>) : Recyc
         val weekRoutine = weekRoutineList[position]
         holder.nameTextView.text = weekRoutine.name
         holder.notesTextView.text = weekRoutine.notes
+    }
+
+    fun updateData(newItems: List<WeekRoutine>) {
+        weekRoutineList = newItems
+        notifyDataSetChanged() // Notificar al adaptador que los datos han cambiado
     }
 
     override fun getItemCount() = weekRoutineList.size
