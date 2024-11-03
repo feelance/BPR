@@ -28,7 +28,7 @@ public class ExerciseMapperImpl implements ExerciseMapper {
             exerciseEntity.setName(exercise.getName());
             exerciseEntity.setDescription(exercise.getDescription());
             exerciseEntity.setCategory(exercise.getCategory());
-            exerciseEntity.setImageUrl(exercise.getImage());
+            exerciseEntity.setImageUrl(exercise.getImageUrl());
         }
         return exerciseEntity;
     }
