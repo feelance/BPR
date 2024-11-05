@@ -18,7 +18,7 @@ public class ExerciseRecordEntity {
 
     private String notes;
 
-    @OneToMany(mappedBy = "exerciseRecord", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "exerciseRecord", cascade = CascadeType.ALL, orphanRemoval = false)
     private Set<ExerciseSeriesEntity> day_routines;
 
     @ManyToOne
