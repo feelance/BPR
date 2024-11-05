@@ -15,12 +15,13 @@ public class ExerciseRecordEntity {
 
     @Column(unique = true, nullable = false)
     private String name;
+
     private String notes;
 
-    @OneToMany(mappedBy = "weekRoutine", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "exerciseRecord", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ExerciseSeriesEntity> day_routines;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "account_id")
+    private AccountEntity account;
 }

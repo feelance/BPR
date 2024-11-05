@@ -1,7 +1,7 @@
 package bpr.fitness.companion.backend.mapper;
 
 import bpr.fitness.companion.backend.model.dto.User;
-import bpr.fitness.companion.backend.model.entity.UserEntity;
+import bpr.fitness.companion.backend.model.entity.AccountEntity;
 
 import java.util.List;
 
@@ -12,20 +12,20 @@ public interface UserMapper {
      * @param user contains all user details
      * @return UserEntity
      */
-    UserEntity mapToUserEntity(User user);
+    AccountEntity mapToUserEntity(User user);
 
     /**
      * Maps to User list
-     * @param userEntityList list of UserEntity
+     * @param accountEntityList list of UserEntity
      * @return List<User>
      */
-    List<User> mapToUserList(List<UserEntity> userEntityList);
+    List<User> mapToUserList(List<AccountEntity> accountEntityList);
 
     /**
      * Maps to User
-     * @param userEntity UserEntity
+     * @param accountEntity UserEntity
      * @return User
      */
-    User mapToUser(UserEntity userEntity);
+    User mapToUser(AccountEntity accountEntity);
 }
 

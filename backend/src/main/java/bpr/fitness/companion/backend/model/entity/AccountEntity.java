@@ -8,8 +8,8 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "USER")
-public class UserEntity {
+@Table(name = "ACCOUNT")
+public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,9 +18,9 @@ public class UserEntity {
     private String userName;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ExerciseRecordEntity> exercise_records;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WeekRoutineEntity> weekRoutines;
 }

@@ -3,7 +3,7 @@ package bpr.fitness.companion.backend.service.impl;
 import bpr.fitness.companion.backend.exception.UserNotFoundException;
 import bpr.fitness.companion.backend.mapper.UserMapper;
 import bpr.fitness.companion.backend.model.dto.User;
-import bpr.fitness.companion.backend.model.entity.UserEntity;
+import bpr.fitness.companion.backend.model.entity.AccountEntity;
 import bpr.fitness.companion.backend.repository.UserRepository;
 import bpr.fitness.companion.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,20 +26,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        UserEntity userEntity = mapper.mapToUserEntity(user);
-        userEntity = userRepository.save(userEntity);
-        return mapper.mapToUser(userEntity);
+        AccountEntity accountEntity = mapper.mapToUserEntity(user);
+        accountEntity = userRepository.save(accountEntity);
+        return mapper.mapToUser(accountEntity);
     }
 
     @Override
     public List<User> getAllUsers() {
-        List<UserEntity> userEntities = userRepository.findAll();
+        List<AccountEntity> userEntities = userRepository.findAll();
         return mapper.mapToUserList(userEntities);
     }
 
     @Override
     public User getUserById(Long id) {
-        Optional<UserEntity> optUserEntity = userRepository.findById(id);
+        Optional<AccountEntity> optUserEntity = userRepository.findById(id);
         return optUserEntity.map(mapper::mapToUser).orElse(null);
     }
 
@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("User with id " + id + " not found");
         }
         userDetails.setId(id);
-        UserEntity userEntity = mapper.mapToUserEntity(userDetails);
-        userRepository.save(userEntity);
-        return mapper.mapToUser(userEntity);
+        AccountEntity accountEntity = mapper.mapToUserEntity(userDetails);
+        userRepository.save(accountEntity);
+        return mapper.mapToUser(accountEntity);
     }
 
     @Override

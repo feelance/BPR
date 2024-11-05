@@ -2,17 +2,13 @@ package bpr.fitness.companion.backend.mapper.impl;
 
 import bpr.fitness.companion.backend.mapper.UserMapper;
 import bpr.fitness.companion.backend.model.dto.User;
-import bpr.fitness.companion.backend.model.entity.ExerciseRecordEntity;
-import bpr.fitness.companion.backend.model.entity.UserEntity;
-import org.springframework.stereotype.Component;
+import bpr.fitness.companion.backend.model.entity.AccountEntity;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserMapperImpl implements UserMapper {
@@ -23,46 +19,46 @@ public class UserMapperImpl implements UserMapper {
      * @return UserEntity
      */
     @Override
-    public UserEntity mapToUserEntity(User user) {
-        UserEntity userEntity = null;
+    public AccountEntity mapToUserEntity(User user) {
+        AccountEntity accountEntity = null;
         if (user != null) {
-            userEntity = new UserEntity();
-            userEntity.setId(user.getId());
-            userEntity.setUserName(user.getUserName());
-            userEntity.setPassword(user.getPassword());
+            accountEntity = new AccountEntity();
+            accountEntity.setId(user.getId());
+            accountEntity.setUserName(user.getUserName());
+            accountEntity.setPassword(user.getPassword());
         }
-        return userEntity;
+        return accountEntity;
     }
 
     /**
      * Maps to User
-     * @param userEntity UserEntity
+     * @param accountEntity UserEntity
      * @return User
      */
     @Override
-    public User mapToUser(UserEntity userEntity) {
+    public User mapToUser(AccountEntity accountEntity) {
         User user = null;
-        if (userEntity != null) {
+        if (accountEntity != null) {
             user = new User();
-            user.setId(userEntity.getId());
-            user.setUserName(userEntity.getUserName());
-            user.setPassword(userEntity.getPassword());
+            user.setId(accountEntity.getId());
+            user.setUserName(accountEntity.getUserName());
+            user.setPassword(accountEntity.getPassword());
         }
         return user;
     }
 
     /**
      * Maps to User list
-     * @param userEntityList list of UserEntity
+     * @param accountEntityList list of UserEntity
      * @return List<User>
      */
     @Override
-    public List<User> mapToUserList(List<UserEntity> userEntityList) {
+    public List<User> mapToUserList(List<AccountEntity> accountEntityList) {
         List<User> userList = null;
-        if (!CollectionUtils.isEmpty(userEntityList)) {
+        if (!CollectionUtils.isEmpty(accountEntityList)) {
             userList = new ArrayList<>();
-            for (UserEntity userEntity : userEntityList) {
-                userList.add(mapToUser(userEntity));
+            for (AccountEntity accountEntity : accountEntityList) {
+                userList.add(mapToUser(accountEntity));
             }
         }
         return userList;

@@ -21,7 +21,7 @@ public class WeekRoutineEntity {
     private Set<DayRoutineEntity> dayRoutines;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    @JoinColumn(name = "acount_id", nullable = false)
+    private AccountEntity account;
 
 }
