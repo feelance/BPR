@@ -11,8 +11,8 @@ import com.freelance.bprfront.model.WeekRoutine
 class WeekRoutineAdapter(private var weekRoutineList: List<WeekRoutine>) : RecyclerView.Adapter<WeekRoutineAdapter.WeekRoutineViewHolder>() {
 
     class WeekRoutineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.routineName)
-        val notesTextView: TextView = itemView.findViewById(R.id.routineNotes)
+        val nameTextView: TextView = itemView.findViewById(R.id.tvRoutineName)
+        val notesTextView: TextView = itemView.findViewById(R.id.tvRoutineNotes)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeekRoutineViewHolder {

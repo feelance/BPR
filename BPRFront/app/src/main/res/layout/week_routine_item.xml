@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/routineName"
+            android:id="@+id/tvRoutineName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -25,7 +25,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/routineNotes"
+            android:id="@+id/tvRoutineNotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -33,4 +33,13 @@
             android:textColor="@android:color/darker_gray"
             android:layout_marginTop="4dp"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/tvRoutineTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:textSize="32sp"
+        android:layout_marginEnd="8dp"
+        tools:text="15''"
+        />
 </androidx.cardview.widget.CardView>
