@@ -1,6 +1,7 @@
 package com.example.fitnesscompanion_front.model
 
-data class Workout(
+data class WeeklyRoutine(
+    val id: Int,
     val name: String,
-    val duration: Int // Duration in minutes
+    val notes: String
 )

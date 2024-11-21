@@ -22,12 +22,6 @@ fun HomeScreen(navController: NavController) {
         ) {
             Text("Welcome to the Fitness App!")
             Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = { navController.navigate("weekly_routine") },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Go to Weekly Routine")
-            }
         }
     }
 }

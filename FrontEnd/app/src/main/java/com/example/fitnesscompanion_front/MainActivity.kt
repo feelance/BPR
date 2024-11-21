@@ -7,17 +7,16 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
+import com.example.fitnesscompanion_front.screens.AddRoutineScreen
+import com.example.fitnesscompanion_front.screens.DayRoutineScreen
 import com.example.fitnesscompanion_front.screens.HomeScreen
 import com.example.fitnesscompanion_front.screens.WeeklyRoutineScreen
 import com.example.fitnesscompanion_front.ui.theme.BlackBackground
@@ -56,6 +55,11 @@ fun AppNavigation() {
             composable(Screen.WeeklyRoutine.route) {
                 WeeklyRoutineScreen(navController = navController)
             }
+            composable("day_routines/{routineName}") { backStackEntry ->
+                val routineName = backStackEntry.arguments?.getString("routineName") ?: "Unknown Routine"
+                DayRoutineScreen(navController, routineName)
+            }
+            composable("add_routine") { AddRoutineScreen(navController) }
         }
     }
 }

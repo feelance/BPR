@@ -1,6 +1,7 @@
 package com.example.fitnesscompanion_front.screens
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -12,13 +13,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.fitnesscompanion_front.model.Workout
-import com.example.fitnesscompanion_front.viewmodel.WorkoutViewModel
+import com.example.fitnesscompanion_front.model.WeeklyRoutine
+import com.example.fitnesscompanion_front.viewmodel.WeeklyRoutineViewModel
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AddWorkoutScreen(navController: NavController, workoutViewModel: WorkoutViewModel = viewModel()) {
+fun AddWorkoutScreen(navController: NavController, workoutViewModel: WeeklyRoutineViewModel = viewModel()) {
     var name by remember { mutableStateOf("") }
-    var duration by remember { mutableStateOf("") }
+    var notes by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -46,8 +48,8 @@ fun AddWorkoutScreen(navController: NavController, workoutViewModel: WorkoutView
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
-                value = duration,
-                onValueChange = { duration = it },
+                value = notes,
+                onValueChange = { notes = it },
                 label = { Text("Duration (mins)") },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -56,9 +58,7 @@ fun AddWorkoutScreen(navController: NavController, workoutViewModel: WorkoutView
             Button(
                 onClick = {
                     // Ensure the duration is an integer
-                    val durationInt = duration.toIntOrNull() ?: 0 // Default to 0 if the input is invalid
-                    val newWorkout = Workout(name, durationInt)
-                    workoutViewModel.addWorkout(newWorkout)
+                    val newWeeklyRoutine = WeeklyRoutine(1,name, notes)
                     navController.popBackStack() // Go back to the Workout List
                 },
                 modifier = Modifier.fillMaxWidth()

@@ -13,7 +13,7 @@ import java.util.List;
  * This class will contain all weekRoutine operations
  */
 @RestController
-@RequestMapping("/weekroutines")
+@RequestMapping("/weekRoutines")
 public class WeekRoutineController {
 
     private final WeekRoutineService weekRoutineService;

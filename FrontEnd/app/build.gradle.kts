@@ -74,4 +74,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.2")
     debugImplementation("androidx.compose.ui:ui-tooling:1.5.2")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.2")
+
+    // Rest Api calls
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha05")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha05")
+
 }
