@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -140,4 +141,39 @@ public class DayRoutineControllerTest {
                 .andExpect(content().string("DayRoutine with id 1 deleted"));
 
     }
+
+    @Test
+    public void testGetDayRoutinesByWeekRoutineId_Found() throws Exception {
+        DayRoutine routine1 = new DayRoutine();
+        routine1.setId(1L);
+        routine1.setName("Morning Routine");
+        routine1.setExerciseDayRoutines(new HashSet<>(Arrays.asList(101L, 102L)));
+        routine1.setWeekRoutineId(1001L);
+
+        DayRoutine routine2 = new DayRoutine();
+        routine2.setId(2L);
+        routine2.setName("Evening Routine");
+        routine2.setExerciseDayRoutines(new HashSet<>(Arrays.asList(103L, 104L)));
+        routine2.setWeekRoutineId(1001L);
+
+        List<DayRoutine> routines = Arrays.asList(routine1, routine2);
+
+        when(dayRoutineService.getDayRoutinesByWeekRoutineId(1001L)).thenReturn(routines);
+
+        mockMvc.perform(get("/dayRoutines/byWeekRoutine/1001"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("Morning Routine"))
+                .andExpect(jsonPath("$[1].id").value(2))
+                .andExpect(jsonPath("$[1].name").value("Evening Routine"));
+    }
+
+    @Test
+    public void testGetDayRoutinesByWeekRoutineId_NotFound() throws Exception {
+        when(dayRoutineService.getDayRoutinesByWeekRoutineId(1001L)).thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get("/dayRoutines/byWeekRoutine/1001"))
+                .andExpect(status().isNotFound());
+    }
+
 }

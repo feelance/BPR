@@ -41,4 +41,13 @@ public interface DayRoutineService {
      * @param id of the dayRoutine we want to delete
      */
     void deleteDayRoutine(Long id);
+
+    /**
+     * Fetch all day routines associated with a specific weekRoutineId
+     *
+     * @param weekRoutineId the ID of the week routine
+     * @return a list of DayRoutine objects associated with the specified weekRoutineId
+     */
+    List<DayRoutine> getDayRoutinesByWeekRoutineId(Long weekRoutineId);
+
 }

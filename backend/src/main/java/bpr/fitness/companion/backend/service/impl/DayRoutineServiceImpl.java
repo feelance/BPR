@@ -20,12 +20,12 @@ import java.util.Optional;
 @Service
 public class DayRoutineServiceImpl implements DayRoutineService {
 
-    private final DayRoutineRepository DayRoutineRepository;
+    private final DayRoutineRepository dayRoutineRepository;
     private final DayRoutineMapper mapper;
 
     @Autowired
     public DayRoutineServiceImpl(DayRoutineRepository DayRoutineRepository, DayRoutineMapper mapper) {
-        this.DayRoutineRepository = DayRoutineRepository;
+        this.dayRoutineRepository = DayRoutineRepository;
         this.mapper = mapper;
     }
     /**
@@ -37,7 +37,7 @@ public class DayRoutineServiceImpl implements DayRoutineService {
     public DayRoutine createDayRoutine(DayRoutine DayRoutine) throws DatabaseConstraintException {
         try{
             DayRoutineEntity DayRoutineEntity = mapper.mapToDayRoutineEntity(DayRoutine);
-            DayRoutineEntity = DayRoutineRepository.save(DayRoutineEntity);
+            DayRoutineEntity = dayRoutineRepository.save(DayRoutineEntity);
             return mapper.mapToDayRoutine(DayRoutineEntity);
         } catch (DataIntegrityViolationException e){
             throw new DatabaseConstraintException("Name: " + DayRoutine.getName() + " already exists in in table DayRoutine");
@@ -51,7 +51,7 @@ public class DayRoutineServiceImpl implements DayRoutineService {
      */
     @Override
     public List<DayRoutine> getAllDayRoutines() {
-        List<DayRoutineEntity> DayRoutineEntityList = DayRoutineRepository.findAll();
+        List<DayRoutineEntity> DayRoutineEntityList = dayRoutineRepository.findAll();
         return mapper.mapToDayRoutineList(DayRoutineEntityList);
     }
 
@@ -62,7 +62,7 @@ public class DayRoutineServiceImpl implements DayRoutineService {
      */
     @Override
     public DayRoutine getDayRoutineById(Long id) {
-        Optional<DayRoutineEntity> optDayRoutineEntity = DayRoutineRepository.findById(id);
+        Optional<DayRoutineEntity> optDayRoutineEntity = dayRoutineRepository.findById(id);
         DayRoutine DayRoutine = null;
         if (optDayRoutineEntity.isPresent()) {
             DayRoutineEntity DayRoutineEntity = optDayRoutineEntity.get();
@@ -74,12 +74,12 @@ public class DayRoutineServiceImpl implements DayRoutineService {
 
     @Override
     public DayRoutine updateDayRoutine(Long id, DayRoutine dayRoutineDetails) throws DayRoutineNotFoundException{
-        Optional <DayRoutineEntity> optDayRoutineEntity = DayRoutineRepository.findById(id);
+        Optional <DayRoutineEntity> optDayRoutineEntity = dayRoutineRepository.findById(id);
         DayRoutineEntity dayRoutineEntity = null;
         if (optDayRoutineEntity.isPresent()){
             dayRoutineDetails.setId(id);
             dayRoutineEntity = mapper.mapToDayRoutineEntity(dayRoutineDetails);
-            DayRoutineRepository.save(dayRoutineEntity);
+            dayRoutineRepository.save(dayRoutineEntity);
         } else {
             throw new DayRoutineNotFoundException("DayRoutine with id " + id + "not found");
         }
@@ -91,9 +91,22 @@ public class DayRoutineServiceImpl implements DayRoutineService {
      */
     @Override
     public void deleteDayRoutine(Long id) {
-        if (!DayRoutineRepository.existsById(id)) {
+        if (!dayRoutineRepository.existsById(id)) {
             throw new DayRoutineNotFoundException("DayRoutine with id " + id + "not found");
         }
-        DayRoutineRepository.deleteById(id);
+        dayRoutineRepository.deleteById(id);
     }
+
+    /**
+     * Fetch all day routines associated with a specific weekRoutineId
+     *
+     * @param weekRoutineId the ID of the week routine
+     * @return a list of DayRoutine objects associated with the specified weekRoutineId
+     */
+    @Override
+    public List<DayRoutine> getDayRoutinesByWeekRoutineId(Long weekRoutineId) {
+        List<DayRoutineEntity> dayRoutineEntities = dayRoutineRepository.findByWeekRoutineId(weekRoutineId);
+        return mapper.mapToDayRoutineList(dayRoutineEntities);
+    }
+
 }

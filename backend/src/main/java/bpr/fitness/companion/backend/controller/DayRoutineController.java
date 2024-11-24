@@ -80,5 +80,22 @@ public class DayRoutineController {
         DayRoutineService.deleteDayRoutine(id);
         return new ResponseEntity<>("DayRoutine with id " + id + " deleted", HttpStatus.OK);
     }
+
+    /**
+     * Get all day routines by weekRoutineId
+     *
+     * @param weekRoutineId the ID of the week routine
+     * @return ResponseEntity containing a list of DayRoutine objects if found, or NOT_FOUND status if no routines are found
+     */
+    @GetMapping("/byWeekRoutine/{weekRoutineId}")
+    public ResponseEntity<List<DayRoutine>> getDayRoutinesByWeekRoutineId(@PathVariable Long weekRoutineId) {
+        List<DayRoutine> dayRoutines = DayRoutineService.getDayRoutinesByWeekRoutineId(weekRoutineId);
+        if (dayRoutines != null && !dayRoutines.isEmpty()) {
+            return new ResponseEntity<>(dayRoutines, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
 
