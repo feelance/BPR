@@ -106,12 +106,12 @@ public class WeekRoutineServiceImpl implements WeekRoutineService {
 
     /**
      * Get week routines by user id
-     * @param userId user id
+     * @param accountId user id
      * @return List<WeekRoutine>
      */
     @Override
-    public List<WeekRoutine> getWeekRoutinesByUserId(Long userId) {
-        List<WeekRoutineEntity> weekRoutineEntities = weekRoutineRepository.findByUserId(userId);
+    public List<WeekRoutine> getWeekRoutinesByAccountId(Long accountId) {
+        List<WeekRoutineEntity> weekRoutineEntities = weekRoutineRepository.findByAccountId(accountId);
         return mapper.mapToWeekRoutineList(weekRoutineEntities);
     }
 

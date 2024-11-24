@@ -170,7 +170,7 @@ public class WeekRoutineControllerTest {
 
         List<WeekRoutine> routines = Arrays.asList(routine1, routine2);
 
-        when(weekRoutineService.getWeekRoutinesByUserId(501L)).thenReturn(routines);
+        when(weekRoutineService.getWeekRoutinesByAccountId(501L)).thenReturn(routines);
 
         mockMvc.perform(get("/weekroutines/user/501"))
                 .andExpect(status().isOk())
@@ -182,7 +182,7 @@ public class WeekRoutineControllerTest {
 
     @Test
     public void testGetWeekRoutinesByUser_NotFound() throws Exception {
-        when(weekRoutineService.getWeekRoutinesByUserId(501L)).thenReturn(new ArrayList<>());
+        when(weekRoutineService.getWeekRoutinesByAccountId(501L)).thenReturn(new ArrayList<>());
 
         mockMvc.perform(get("/weekroutines/user/501"))
                 .andExpect(status().isNotFound());

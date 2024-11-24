@@ -1,7 +1,6 @@
 package bpr.fitness.companion.backend.service;
 
 import bpr.fitness.companion.backend.model.dto.WeekRoutine;
-import bpr.fitness.companion.backend.model.dto.WeekRoutine;
 
 import java.util.List;
 
@@ -48,6 +47,6 @@ public interface WeekRoutineService {
      * @param userId user id
      * @return List<WeekRoutine>
      */
-    List<WeekRoutine> getWeekRoutinesByUserId(Long userId);
+    List<WeekRoutine> getWeekRoutinesByAccountId(Long userId);
 
 }

@@ -83,12 +83,12 @@ public class WeekRoutineController {
 
     /**
      * Get all week routines for a specific user
-     * @param userId ID of the user
+     * @param AccountId ID of the user
      * @return List<WeekRoutine>
      */
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<WeekRoutine>> getWeekRoutinesByUser(@PathVariable Long userId) {
-        List<WeekRoutine> weekRoutines = weekRoutineService.getWeekRoutinesByUserId(userId);
+    @GetMapping("/user/{AccountId}")
+    public ResponseEntity<List<WeekRoutine>> getWeekRoutinesByAccountId(@PathVariable Long AccountId) {
+        List<WeekRoutine> weekRoutines = weekRoutineService.getWeekRoutinesByAccountId(AccountId);
         if (weekRoutines != null && !weekRoutines.isEmpty()) {
             return new ResponseEntity<>(weekRoutines, HttpStatus.OK);
         } else {
