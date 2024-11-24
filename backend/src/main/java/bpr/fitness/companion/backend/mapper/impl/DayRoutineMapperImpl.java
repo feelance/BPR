@@ -3,6 +3,7 @@ package bpr.fitness.companion.backend.mapper.impl;
 import bpr.fitness.companion.backend.mapper.DayRoutineMapper;
 import bpr.fitness.companion.backend.model.dto.DayRoutine;
 import bpr.fitness.companion.backend.model.entity.DayRoutineEntity;
+import bpr.fitness.companion.backend.model.entity.WeekRoutineEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -25,9 +26,19 @@ public class DayRoutineMapperImpl implements DayRoutineMapper {
             dayRoutineEntity = new DayRoutineEntity();
             dayRoutineEntity.setId(dayRoutine.getId());
             dayRoutineEntity.setName(dayRoutine.getName());
+            dayRoutineEntity.setWeekRoutine(mapToWeekRoutineEntity(dayRoutine.getWeekRoutineId()));
 
         }
         return dayRoutineEntity;
+    }
+
+    private WeekRoutineEntity mapToWeekRoutineEntity(Long weekRoutineId) {
+        if (weekRoutineId != null){
+            WeekRoutineEntity weekRoutineEntity = new WeekRoutineEntity();
+            weekRoutineEntity.setId(weekRoutineId);
+            return weekRoutineEntity;
+        }
+        return null;
     }
 
     /**
