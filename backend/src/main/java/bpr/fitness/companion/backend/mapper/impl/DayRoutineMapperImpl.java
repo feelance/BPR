@@ -70,7 +70,15 @@ public class DayRoutineMapperImpl implements DayRoutineMapper {
             dayRoutine = new DayRoutine();
             dayRoutine.setId(dayRoutineEntity.getId());
             dayRoutine.setName(dayRoutineEntity.getName());
+            dayRoutine.setWeekRoutineId(mapToWeekRoutine(dayRoutineEntity.getWeekRoutine()));
         }
         return dayRoutine;
+    }
+
+    private Long mapToWeekRoutine(WeekRoutineEntity weekRoutine) {
+        if(weekRoutine != null){
+            return weekRoutine.getId();
+        }
+        return null;
     }
 }
