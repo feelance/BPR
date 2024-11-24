@@ -42,4 +42,12 @@ public interface WeekRoutineService {
      * @param id of the week routine we want to delete
      */
     void deleteWeekRoutine(Long id);
+
+    /**
+     * Get week routines by user id
+     * @param userId user id
+     * @return List<WeekRoutine>
+     */
+    List<WeekRoutine> getWeekRoutinesByUserId(Long userId);
+
 }

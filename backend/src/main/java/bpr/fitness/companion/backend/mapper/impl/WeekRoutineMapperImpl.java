@@ -8,6 +8,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Mapper for all weekRoutine operations
@@ -63,4 +64,5 @@ public class WeekRoutineMapperImpl implements WeekRoutineMapper {
         }
         return weekRoutine;
     }
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
  * This class will contain all dayRoutine operations
  */
 @RestController
-@RequestMapping("/dayroutines")
+@RequestMapping("/dayRoutines")
 public class DayRoutineController {
 
     private final DayRoutineService DayRoutineService;

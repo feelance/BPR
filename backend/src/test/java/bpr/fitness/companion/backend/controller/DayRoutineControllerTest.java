@@ -36,7 +36,7 @@ public class DayRoutineControllerTest {
 
         when(dayRoutineService.createDayRoutine(Mockito.any(DayRoutine.class))).thenReturn(newDayRoutine);
 
-        mockMvc.perform(post("/dayroutines")
+        mockMvc.perform(post("/dayRoutines")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         {
@@ -71,7 +71,7 @@ public class DayRoutineControllerTest {
 
         when(dayRoutineService.getAllDayRoutines()).thenReturn(routines);
 
-        mockMvc.perform(get("/dayroutines"))
+        mockMvc.perform(get("/dayRoutines"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].name").value("Morning Routine"))
@@ -89,7 +89,7 @@ public class DayRoutineControllerTest {
 
         when(dayRoutineService.getDayRoutineById(1L)).thenReturn(routine);
 
-        mockMvc.perform(get("/dayroutines/1"))
+        mockMvc.perform(get("/dayRoutines/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Morning Routine"))
@@ -100,7 +100,7 @@ public class DayRoutineControllerTest {
     public void testGetDayRoutineById_NotFound() throws Exception {
         when(dayRoutineService.getDayRoutineById(99L)).thenReturn(null);
 
-        mockMvc.perform(get("/dayroutines/99"))
+        mockMvc.perform(get("/dayRoutines/99"))
                 .andExpect(status().isNotFound());
     }
 
@@ -114,7 +114,7 @@ public class DayRoutineControllerTest {
 
         when(dayRoutineService.updateDayRoutine(eq(1L), Mockito.any(DayRoutine.class))).thenReturn(updatedRoutine);
 
-        mockMvc.perform(put("/dayroutines/1")
+        mockMvc.perform(put("/dayRoutines/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         {
@@ -135,7 +135,7 @@ public class DayRoutineControllerTest {
     public void testDeleteDayRoutine() throws Exception {
         doNothing().when(dayRoutineService).deleteDayRoutine(1L);
 
-        mockMvc.perform(delete("/dayroutines/1"))
+        mockMvc.perform(delete("/dayRoutines/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("DayRoutine with id 1 deleted"));
 

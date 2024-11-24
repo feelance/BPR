@@ -103,4 +103,16 @@ public class WeekRoutineServiceImpl implements WeekRoutineService {
         }
         weekRoutineRepository.deleteById(id);
     }
+
+    /**
+     * Get week routines by user id
+     * @param userId user id
+     * @return List<WeekRoutine>
+     */
+    @Override
+    public List<WeekRoutine> getWeekRoutinesByUserId(Long userId) {
+        List<WeekRoutineEntity> weekRoutineEntities = weekRoutineRepository.findByUserId(userId);
+        return mapper.mapToWeekRoutineList(weekRoutineEntities);
+    }
+
 }

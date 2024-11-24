@@ -32,4 +32,6 @@ public interface WeekRoutineMapper {
      * @return WeekRoutine
      */
     WeekRoutine mapToWeekRoutine(WeekRoutineEntity weekRoutineEntity);
+
+
 }

@@ -80,5 +80,21 @@ public class WeekRoutineController {
         weekRoutineService.deleteWeekRoutine(id);
         return new ResponseEntity<>("WeekRoutine with id " + id + " deleted",HttpStatus.OK);
     }
+
+    /**
+     * Get all week routines for a specific user
+     * @param userId ID of the user
+     * @return List<WeekRoutine>
+     */
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<WeekRoutine>> getWeekRoutinesByUser(@PathVariable Long userId) {
+        List<WeekRoutine> weekRoutines = weekRoutineService.getWeekRoutinesByUserId(userId);
+        if (weekRoutines != null && !weekRoutines.isEmpty()) {
+            return new ResponseEntity<>(weekRoutines, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
 
