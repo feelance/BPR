@@ -32,6 +32,13 @@ public class DayRoutineMapperImpl implements DayRoutineMapper {
         return dayRoutineEntity;
     }
 
+    /**
+     * Maps a week routine ID to a WeekRoutineEntity object.
+     *
+     * @param weekRoutineId the ID of the week routine to map to a WeekRoutineEntity
+     * @return a WeekRoutineEntity object with the specified week routine ID set,
+     *         or {@code null} if the week routine ID is {@code null}
+     */
     private WeekRoutineEntity mapToWeekRoutineEntity(Long weekRoutineId) {
         if (weekRoutineId != null){
             WeekRoutineEntity weekRoutineEntity = new WeekRoutineEntity();
@@ -75,6 +82,12 @@ public class DayRoutineMapperImpl implements DayRoutineMapper {
         return dayRoutine;
     }
 
+    /**
+     * Maps a WeekRoutineEntity object to its corresponding ID.
+     *
+     * @param weekRoutine the WeekRoutineEntity object to map
+     * @return the ID of the WeekRoutineEntity, or {@code null} if the WeekRoutineEntity is {@code null}
+     */
     private Long mapToWeekRoutine(WeekRoutineEntity weekRoutine) {
         if(weekRoutine != null){
             return weekRoutine.getId();

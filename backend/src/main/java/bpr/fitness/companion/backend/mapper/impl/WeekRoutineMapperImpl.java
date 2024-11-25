@@ -34,6 +34,12 @@ public class WeekRoutineMapperImpl implements WeekRoutineMapper {
         return weekRoutineEntity;
     }
 
+    /**
+     * Maps a user ID to an AccountEntity object.
+     *
+     * @param userId the ID of the user to map to an AccountEntity
+     * @return an AccountEntity object with the specified user ID set, or {@code null} if the user ID is {@code null}
+     */
     private AccountEntity mapToAccountEntity(Long userId) {
         if(userId != null){
             AccountEntity accountEntity = new AccountEntity();
@@ -78,6 +84,12 @@ public class WeekRoutineMapperImpl implements WeekRoutineMapper {
         return weekRoutine;
     }
 
+    /**
+     * Maps an AccountEntity object to its corresponding ID.
+     *
+     * @param account the AccountEntity object to map
+     * @return the ID of the AccountEntity, or {@code null} if the AccountEntity is {@code null}
+     */
     private Long mapToAccount(AccountEntity account) {
         if(account != null){
             return account.getId();
