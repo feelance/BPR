@@ -2,6 +2,7 @@ package bpr.fitness.companion.backend.mapper.impl;
 
 import bpr.fitness.companion.backend.mapper.WeekRoutineMapper;
 import bpr.fitness.companion.backend.model.dto.WeekRoutine;
+import bpr.fitness.companion.backend.model.entity.AccountEntity;
 import bpr.fitness.companion.backend.model.entity.WeekRoutineEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -28,9 +29,20 @@ public class WeekRoutineMapperImpl implements WeekRoutineMapper {
             weekRoutineEntity.setId(weekRoutine.getId());
             weekRoutineEntity.setName(weekRoutine.getName());
             weekRoutineEntity.setNotes(weekRoutine.getNotes());
+            weekRoutineEntity.setAccount(mapToAccountEntity(weekRoutine.getUserId()));
         }
         return weekRoutineEntity;
     }
+
+    private AccountEntity mapToAccountEntity(Long userId) {
+        if(userId != null){
+            AccountEntity accountEntity = new AccountEntity();
+            accountEntity.setId(userId);
+            return accountEntity;
+        }
+        return null;
+    }
+
     /**
      * Maps to weekRoutine Entity List
      * @param weekRoutineEntityList list of weekRoutineEntity
@@ -61,8 +73,16 @@ public class WeekRoutineMapperImpl implements WeekRoutineMapper {
             weekRoutine.setId(weekRoutineEntity.getId());
             weekRoutine.setName(weekRoutineEntity.getName());
             weekRoutine.setNotes(weekRoutineEntity.getNotes());
+            weekRoutine.setUserId(mapToAccount(weekRoutineEntity.getAccount()));
         }
         return weekRoutine;
+    }
+
+    private Long mapToAccount(AccountEntity account) {
+        if(account != null){
+            return account.getId();
+        }
+        return null;
     }
 
 }
