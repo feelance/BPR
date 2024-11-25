@@ -14,13 +14,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.model.DayRoutine
-import com.example.fitnesscompanion_front.model.Exercise
-import com.example.fitnesscompanion_front.model.WeeklyRoutine
-import com.example.fitnesscompanion_front.viewmodel.WeeklyRoutineViewModel
+import com.example.fitnesscompanion_front.model.WeekRoutine
+import com.example.fitnesscompanion_front.viewmodel.WeekRoutineViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AddWorkoutScreen(navController: NavController, workoutViewModel: WeeklyRoutineViewModel = viewModel()) {
+fun AddWorkoutScreen(navController: NavController, workoutViewModel: WeekRoutineViewModel = viewModel()) {
     var name by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
     var dayRoutines  by remember { mutableStateOf(listOf<DayRoutine>()) }
@@ -61,7 +60,7 @@ fun AddWorkoutScreen(navController: NavController, workoutViewModel: WeeklyRouti
             Button(
                 onClick = {
                     // Ensure the duration is an integer
-                    val newWeeklyRoutine = WeeklyRoutine(1,name, "dsds", dayRoutines )
+                    val newWeekRoutine = WeekRoutine(1,name, "dsds", dayRoutines )
                     navController.popBackStack() // Go back to the Workout List
                 },
                 modifier = Modifier.fillMaxWidth()

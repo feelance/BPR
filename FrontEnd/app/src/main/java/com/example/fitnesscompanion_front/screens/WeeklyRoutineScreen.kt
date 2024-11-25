@@ -13,18 +13,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.fitnesscompanion_front.viewmodel.WeeklyRoutineViewModel
+import com.example.fitnesscompanion_front.viewmodel.WeekRoutineViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WeeklyRoutineScreen(
     navController: NavController,
-    viewModel: WeeklyRoutineViewModel = viewModel() // Correct way to retrieve ViewModel
+    viewModel: WeekRoutineViewModel = viewModel() // Correct way to retrieve ViewModel
 ) {
-    val weeklyRoutines by viewModel.weeklyRoutines.collectAsState()
+    val weeklyRoutines by viewModel.weekRoutines.collectAsState()
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Weekly Routine") }) },

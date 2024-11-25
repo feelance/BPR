@@ -13,31 +13,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.fitnesscompanion_front.model.DayRoutine
-import com.example.fitnesscompanion_front.retrofit.RetrofitInstance
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DayRoutineScreen(navController: NavController, routineName: String) {
-    var dayRoutines by remember { mutableStateOf<List<DayRoutine>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+fun DayRoutineScreen(
+    navController: NavController,
+    dayRoutineName: String,
+    weekRoutineId: Int,
+    viewModel: DayRoutineViewModel = viewModel()
+) {
+    // Observe ViewModel state
+    val dayRoutines by viewModel.dayRoutines.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
+    // Fetch data when screen starts
     LaunchedEffect(Unit) {
-        try {
-            val response = RetrofitInstance.dayRoutineApi.getDayRoutinesByWeekRoutineId(34)
-            dayRoutines = response
-            isLoading = false
-        } catch (e: Exception) {
-            errorMessage = e.localizedMessage ?: "An error occurred"
-            isLoading = false
-        }
+        viewModel.fetchDayRoutines(weekRoutineId)
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(routineName) },
+                title = { Text(dayRoutineName) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
@@ -51,7 +52,7 @@ fun DayRoutineScreen(navController: NavController, routineName: String) {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            Text("Day Routines for $routineName", style = MaterialTheme.typography.h6)
+            Text("Day Routines for $dayRoutineName", style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(16.dp))
 
             when {
@@ -72,8 +73,8 @@ fun DayRoutineScreen(navController: NavController, routineName: String) {
                 else -> {
                     LazyColumn {
                         items(dayRoutines) { dayRoutine ->
-                            RoutineCard(
-                                routineName = dayRoutine.name,
+                            DayRoutineCard(
+                                dayRoutineName = dayRoutine.name,
                                 onClick = {
                                     // Handle click event, e.g., navigate to a details screen
                                 }
@@ -84,11 +85,11 @@ fun DayRoutineScreen(navController: NavController, routineName: String) {
             }
         }
     }
-    }
+}
 
 @Composable
-fun RoutineCard(
-    routineName: String,
+fun DayRoutineCard(
+    dayRoutineName: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
@@ -97,12 +98,13 @@ fun RoutineCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .clickable { onClick() } // Allows click interaction
+            .clickable { onClick() }
     ) {
         Text(
-            text = routineName,
+            text = dayRoutineName,
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.body1
         )
     }
 }
+

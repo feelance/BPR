@@ -13,9 +13,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
-import com.example.fitnesscompanion_front.screens.AddRoutineScreen
+import com.example.fitnesscompanion_front.screens.AddWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.DayRoutineScreen
 import com.example.fitnesscompanion_front.screens.HomeScreen
 import com.example.fitnesscompanion_front.screens.LoginScreen
@@ -72,9 +73,9 @@ fun AppNavigation() {
             }
             composable("day_routines/{routineName}") { backStackEntry ->
                 val routineName = backStackEntry.arguments?.getString("routineName") ?: "Unknown Routine"
-                DayRoutineScreen(navController, routineName)
+                DayRoutineScreen(navController, routineName,1)
             }
-            composable("add_routine") { AddRoutineScreen(navController) }
+            composable("add_routine") { AddWeekRoutineScreen(navController, viewModel()) }
         }
     }
 }
