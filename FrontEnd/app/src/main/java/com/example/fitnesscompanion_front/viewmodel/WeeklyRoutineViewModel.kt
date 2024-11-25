@@ -19,7 +19,7 @@ class WeeklyRoutineViewModel : ViewModel() {
     private fun fetchWeeklyRoutines() {
         viewModelScope.launch {
             try {
-                val routines = RetrofitInstance.api.getWeeklyRoutines(1)
+                val routines = RetrofitInstance.weekRoutineApi.getWeeklyRoutines(1)
                 _weeklyRoutines.value = routines
             } catch (e: Exception) {
                 e.printStackTrace() // Handle errors (e.g., show a message to the user)
