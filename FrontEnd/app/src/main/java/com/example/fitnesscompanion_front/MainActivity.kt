@@ -18,6 +18,7 @@ import androidx.navigation.compose.*
 import com.example.fitnesscompanion_front.screens.AddRoutineScreen
 import com.example.fitnesscompanion_front.screens.DayRoutineScreen
 import com.example.fitnesscompanion_front.screens.HomeScreen
+import com.example.fitnesscompanion_front.screens.LoginScreen
 import com.example.fitnesscompanion_front.screens.WeeklyRoutineScreen
 import com.example.fitnesscompanion_front.ui.theme.BlackBackground
 import com.example.fitnesscompanion_front.ui.theme.FitnessCompanionFrontTheme
@@ -39,16 +40,30 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    var isAuthenticated by remember { mutableStateOf(false) }
 
     // Set up the Scaffold with BottomNavigation
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) }
+        bottomBar = {
+            if (isAuthenticated){
+                BottomNavigationBar(navController) }
+            }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = if (isAuthenticated) Screen.Home.route else "login",
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable("login") {
+                LoginScreen(
+                    onLoginSuccess = {
+                        isAuthenticated = true
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo("login") { inclusive = true } // Clear login from the backstack
+                        }
+                    }
+                )
+            }
             composable(Screen.Home.route) {
                 HomeScreen(navController = navController)
             }
