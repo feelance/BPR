@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -45,6 +46,16 @@ fun DayRoutineScreen(
                     }
                 }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    // Handle FAB click, e.g., navigate to an Add Day Routine screen
+                    navController.navigate("add_day_routine_screen/$weekRoutineId")
+                }
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+            }
         }
     ) {
         Column(
@@ -86,6 +97,7 @@ fun DayRoutineScreen(
         }
     }
 }
+
 
 @Composable
 fun DayRoutineCard(

@@ -19,7 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun WeeklyRoutineScreen(
+fun WeekRoutineScreen(
     navController: NavController,
     viewModel: WeekRoutineViewModel = viewModel() // Correct way to retrieve ViewModel
 ) {
