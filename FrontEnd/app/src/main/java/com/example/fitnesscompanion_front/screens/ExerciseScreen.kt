@@ -23,7 +23,7 @@ import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 @Composable
 fun ExerciseScreen(
     navController: NavController,
-    exerciseName: String,
+    dayRoutineName: String,
     dayRoutineId: Int,
     viewModel: ExerciseViewModel = viewModel()
 ) {
@@ -34,7 +34,7 @@ fun ExerciseScreen(
 
     // Fetch data when screen starts
     LaunchedEffect(Unit) {
-        viewModel.fetchDayRoutines(dayRoutineId)
+        viewModel.fetchExercises(dayRoutineId)
     }
 
     Scaffold(
@@ -105,7 +105,7 @@ fun ExerciseScreen(
                             DayRoutineCard(
                                 dayRoutineName = exercise.name,
                                 onClick = {
-                                    navController.navigate("exercises/${dayRoutine.id}/${dayRoutine.name}")
+                                    navController.navigate("exercises/${dayRoutineId}/${dayRoutineName}")
                                 }
                             )
                         }

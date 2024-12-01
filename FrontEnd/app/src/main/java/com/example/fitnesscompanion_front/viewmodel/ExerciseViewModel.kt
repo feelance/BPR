@@ -8,6 +8,7 @@ import com.example.fitnesscompanion_front.model.Exercise
 import com.example.fitnesscompanion_front.model.WeekRoutine
 import com.example.fitnesscompanion_front.model.WeekRoutineRequest
 import com.example.fitnesscompanion_front.model.request.DayRoutineRequest
+import com.example.fitnesscompanion_front.model.request.ExerciseRequest
 import com.example.fitnesscompanion_front.retrofit.RetrofitInstance
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,7 +32,7 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                val response = RetrofitInstance.exerciseApi.getDayRoutinesByWeekRoutineId(dayRoutineId)
+                val response = RetrofitInstance.exerciseApi.getExercisesByDayRoutineId(dayRoutineId)
                 _exercises.value = response
                 _isLoading.value = false
             } catch (e: Exception) {
@@ -41,13 +42,13 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
         }
     }
 
-    fun saveDayRoutine(dayRoutine: DayRoutine, weekRoutineId: Int) {
+    fun saveDayRoutine(exercise: Exercise) {
         viewModelScope.launch {
             try {
                 // Call the API
-                val request = ExerciseRequest(name = dayRoutine.name, weekRoutineId = weekRoutineId)
-                RetrofitInstance.exerciseApi.saveDayRoutine(request)
-                _exercises.value = RetrofitInstance.exerciseApi.getDayRoutinesByWeekRoutineId(weekRoutineId)
+                val request = ExerciseRequest(name = exercise.name, description = exercise.description, category = exercise.category, dayRoutineId)
+                RetrofitInstance.exerciseApi.saveExercise(request)
+                _exercises.value = RetrofitInstance.exerciseApi.getExercisesByDayRoutineId(dayRoutineId)
                 // Handle success
             } catch (e: Exception) {
                 // Handle error
@@ -59,10 +60,10 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
 }
 
 
-class DayRoutineViewModelFactory(private val weekRoutineId: Int) : ViewModelProvider.Factory {
+class ExerciseViewModelFactory(private val dayRoutineId: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DayRoutineViewModel::class.java)) {
-            return DayRoutineViewModel(weekRoutineId) as T
+            return DayRoutineViewModel(dayRoutineId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

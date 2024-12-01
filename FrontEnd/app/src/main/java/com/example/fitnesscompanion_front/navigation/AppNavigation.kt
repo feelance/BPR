@@ -19,11 +19,14 @@ import com.example.fitnesscompanion_front.Screen
 import com.example.fitnesscompanion_front.screens.AddDayRoutineScreen
 import com.example.fitnesscompanion_front.screens.AddWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.DayRoutineScreen
+import com.example.fitnesscompanion_front.screens.ExerciseScreen
 import com.example.fitnesscompanion_front.screens.HomeScreen
 import com.example.fitnesscompanion_front.screens.LoginScreen
 import com.example.fitnesscompanion_front.screens.WeekRoutineScreen
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModelFactory
+import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
+import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModelFactory
 
 @Composable
 fun AppNavigation() {
@@ -93,8 +96,8 @@ fun AppNavigation() {
                 val dayRoutineName = backStackEntry.arguments?.getString("dayRoutineName") ?: "Unknown Day Routine"
                 val dayRoutineId = backStackEntry.arguments?.getInt("dayRoutineId") ?: 0
 
-                val viewModel: DayRoutineViewModel = viewModel(factory = ExerciseViewModelFactory(dayRoutineId))
-                ExerciseScreen(navController, dayRoutineName, dayRoutineId)
+                val viewModel: ExerciseViewModel = viewModel(factory = ExerciseViewModelFactory(dayRoutineId))
+                ExerciseScreen(navController, dayRoutineName, dayRoutineId, viewModel)
             }
 
         }

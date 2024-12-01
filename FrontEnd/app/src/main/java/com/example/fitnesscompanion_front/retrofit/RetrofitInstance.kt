@@ -21,4 +21,12 @@ object RetrofitInstance {
             .build()
             .create(DayRoutineApi::class.java)
     }
+
+    val exerciseApi: ExerciseApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL) // Replace with your API base URL
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ExerciseApi::class.java)
+    }
 }
