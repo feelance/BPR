@@ -16,11 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
+import com.example.fitnesscompanion_front.navigation.AppNavigation
 import com.example.fitnesscompanion_front.screens.AddWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.DayRoutineScreen
 import com.example.fitnesscompanion_front.screens.HomeScreen
 import com.example.fitnesscompanion_front.screens.LoginScreen
-import com.example.fitnesscompanion_front.screens.WeeklyRoutineScreen
+import com.example.fitnesscompanion_front.screens.WeekRoutineScreen
 import com.example.fitnesscompanion_front.ui.theme.BlackBackground
 import com.example.fitnesscompanion_front.ui.theme.FitnessCompanionFrontTheme
 import com.example.fitnesscompanion_front.ui.theme.LightGreySurface
@@ -38,47 +39,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
-    var isAuthenticated by remember { mutableStateOf(false) }
 
-    // Set up the Scaffold with BottomNavigation
-    Scaffold(
-        bottomBar = {
-            if (isAuthenticated){
-                BottomNavigationBar(navController) }
-            }
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = if (isAuthenticated) Screen.Home.route else "login",
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable("login") {
-                LoginScreen(
-                    onLoginSuccess = {
-                        isAuthenticated = true
-                        navController.navigate(Screen.Home.route) {
-                            popUpTo("login") { inclusive = true } // Clear login from the backstack
-                        }
-                    }
-                )
-            }
-            composable(Screen.Home.route) {
-                HomeScreen(navController = navController)
-            }
-            composable(Screen.WeeklyRoutine.route) {
-                WeeklyRoutineScreen(navController = navController)
-            }
-            composable("day_routines/{routineName}") { backStackEntry ->
-                val routineName = backStackEntry.arguments?.getString("routineName") ?: "Unknown Routine"
-                DayRoutineScreen(navController, routineName,1)
-            }
-            composable("add_routine") { AddWeekRoutineScreen(navController, viewModel()) }
-        }
-    }
-}
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {

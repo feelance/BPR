@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,7 +94,7 @@ public class DayRoutineController {
         if (dayRoutines != null && !dayRoutines.isEmpty()) {
             return new ResponseEntity<>(dayRoutines, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
         }
     }
 

@@ -10,7 +10,7 @@ import retrofit2.http.Path
 
 interface WeekRoutineApi {
     @GET("/weekRoutines/user/{id}")
-    suspend fun getWeeklyRoutines(@Path("id") userId: Long): List<WeekRoutine>
+    suspend fun getWeeklyRoutines(@Path("id") userId: Int): List<WeekRoutine>
 
     @POST("/weekRoutines") // Replace with your actual API endpoint
     suspend fun saveWeekRoutine(@Body routine: WeekRoutineRequest): WeekRoutineResponse

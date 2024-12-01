@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fitnesscompanion_front.model.DayRoutine
+import com.example.fitnesscompanion_front.model.Exercise
 import com.example.fitnesscompanion_front.model.WeekRoutine
 import com.example.fitnesscompanion_front.model.WeekRoutineRequest
 import com.example.fitnesscompanion_front.model.request.DayRoutineRequest
@@ -11,10 +12,10 @@ import com.example.fitnesscompanion_front.retrofit.RetrofitInstance
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-class DayRoutineViewModel(private val weekRoutineId: Int) : ViewModel() {
+class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
 
-    private val _dayRoutines = MutableStateFlow<List<DayRoutine>>(emptyList())
-    val dayRoutines: StateFlow<List<DayRoutine>> = _dayRoutines
+    private val _exercises = MutableStateFlow<List<Exercise>>(emptyList())
+    val exercises: StateFlow<List<Exercise>> = _exercises
 
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -23,15 +24,15 @@ class DayRoutineViewModel(private val weekRoutineId: Int) : ViewModel() {
     val errorMessage: StateFlow<String?> = _errorMessage
 
     init {
-        fetchDayRoutines(weekRoutineId)
+        fetchExercises(dayRoutineId)
     }
 
-    fun fetchDayRoutines(weekRoutineId: Int) {
+    fun fetchExercises(dayR: Int) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                val response = RetrofitInstance.dayRoutineApi.getDayRoutinesByWeekRoutineId(weekRoutineId)
-                _dayRoutines.value = response
+                val response = RetrofitInstance.exerciseApi.getDayRoutinesByWeekRoutineId(dayRoutineId)
+                _exercises.value = response
                 _isLoading.value = false
             } catch (e: Exception) {
                 _errorMessage.value = e.localizedMessage ?: "An error occurred"
@@ -44,9 +45,9 @@ class DayRoutineViewModel(private val weekRoutineId: Int) : ViewModel() {
         viewModelScope.launch {
             try {
                 // Call the API
-                val request = DayRoutineRequest(name = dayRoutine.name, weekRoutineId = weekRoutineId)
-                RetrofitInstance.dayRoutineApi.saveDayRoutine(request)
-                _dayRoutines.value = RetrofitInstance.dayRoutineApi.getDayRoutinesByWeekRoutineId(weekRoutineId)
+                val request = ExerciseRequest(name = dayRoutine.name, weekRoutineId = weekRoutineId)
+                RetrofitInstance.exerciseApi.saveDayRoutine(request)
+                _exercises.value = RetrofitInstance.exerciseApi.getDayRoutinesByWeekRoutineId(weekRoutineId)
                 // Handle success
             } catch (e: Exception) {
                 // Handle error

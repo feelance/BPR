@@ -1,7 +1,7 @@
 package com.example.fitnesscompanion_front.model
 
 data class WeekRoutine(
-    val id: Int = 0,
+    val id: Int = 1,
     val name: String = "",
     val notes: String = "",
     val dayRoutines: List<DayRoutine> = emptyList(),

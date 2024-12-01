@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.Screen
+import com.example.fitnesscompanion_front.model.DayRoutine
+import com.example.fitnesscompanion_front.model.request.DayRoutineRequest
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -56,7 +58,8 @@ fun AddDayRoutineScreen(
             Button(
                 onClick = {
                     if (dayRoutineName.isNotBlank()) {
-                        viewModel.saveDayRoutine(dayRoutineName, weekRoutineId)
+                        val dayRoutine  = DayRoutine(name = dayRoutineName, weekRoutineId = weekRoutineId)
+                        viewModel.saveDayRoutine(dayRoutine, weekRoutineId)
                         navController.popBackStack()
                     } else {
                         // Handle empty input (e.g., show a Snackbar or error message)

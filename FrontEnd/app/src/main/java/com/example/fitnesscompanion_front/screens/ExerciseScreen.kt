@@ -17,29 +17,30 @@ import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
+import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DayRoutineScreen(
+fun ExerciseScreen(
     navController: NavController,
-    dayRoutineName: String,
-    weekRoutineId: Int,
-    viewModel: DayRoutineViewModel = viewModel()
+    exerciseName: String,
+    dayRoutineId: Int,
+    viewModel: ExerciseViewModel = viewModel()
 ) {
     // Observe ViewModel state
-    val dayRoutines by viewModel.dayRoutines.collectAsState()
+    val exercises by viewModel.exercises.collectAsState()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
     // Fetch data when screen starts
     LaunchedEffect(Unit) {
-        viewModel.fetchDayRoutines(weekRoutineId)
+        viewModel.fetchDayRoutines(dayRoutineId)
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Day Routines") },
+                title = { Text("Exercises") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
@@ -51,7 +52,7 @@ fun DayRoutineScreen(
             FloatingActionButton(
                 onClick = {
                     // Handle FAB click, e.g., navigate to an Add Day Routine screen
-                    navController.navigate("add_day_routine/$weekRoutineId")
+                    navController.navigate("add_exercise/$dayRoutineId")
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
@@ -63,7 +64,6 @@ fun DayRoutineScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            Text("Day Routines for $dayRoutineName", style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(16.dp))
 
             when {
@@ -81,7 +81,7 @@ fun DayRoutineScreen(
                     )
                 }
 
-                dayRoutines.isEmpty() -> { // Check if the list is empty
+                exercises.isEmpty() -> { // Check if the list is empty
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
@@ -101,9 +101,9 @@ fun DayRoutineScreen(
 
                 else -> {
                     LazyColumn {
-                        items(dayRoutines) { dayRoutine ->
+                        items(exercises) { exercise ->
                             DayRoutineCard(
-                                dayRoutineName = dayRoutine.name,
+                                dayRoutineName = exercise.name,
                                 onClick = {
                                     navController.navigate("exercises/${dayRoutine.id}/${dayRoutine.name}")
                                 }
@@ -118,7 +118,7 @@ fun DayRoutineScreen(
 
 
 @Composable
-fun DayRoutineCard(
+fun ExerciseCard(
     dayRoutineName: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}

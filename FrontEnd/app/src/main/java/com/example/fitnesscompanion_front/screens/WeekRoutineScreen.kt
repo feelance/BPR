@@ -26,10 +26,10 @@ fun WeekRoutineScreen(
     val weeklyRoutines by viewModel.weekRoutines.collectAsState()
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Weekly Routine") }) },
+        topBar = { TopAppBar(title = { Text("Week Routines") }) },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navController.navigate("add_routine")
+                navController.navigate("add_week_routine")
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Routine")
             }
@@ -44,7 +44,7 @@ fun WeekRoutineScreen(
                 LazyColumn {
                     items(weeklyRoutines) { routine ->
                         RoutineCard(routineText = routine.name) {
-                            navController.navigate("day_routines/${routine.name}")
+                            navController.navigate("day_routines/${routine.id}/${routine.name}")
                         }
                     }
                 }
