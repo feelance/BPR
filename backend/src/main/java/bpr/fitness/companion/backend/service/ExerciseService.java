@@ -43,4 +43,11 @@ public interface ExerciseService{
      * @param id of the exercise we want to delete
      */
     void deleteExercise(Long id);
+
+    /**
+     * Get exercises by day routine ID
+     * @param dayRoutineId Id of the exercise
+     * @return List<Exercise>
+     */
+    List<Exercise> getExercisesByDayRoutineId(Long dayRoutineId);
 }

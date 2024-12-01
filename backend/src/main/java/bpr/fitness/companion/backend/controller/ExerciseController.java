@@ -80,5 +80,21 @@ public class ExerciseController {
         exerciseService.deleteExercise(id);
         return new ResponseEntity<>("Exercise with id " + id + " deleted",HttpStatus.OK);
     }
+
+    /**
+     * Get all exercises associated with a specific day routine ID.
+     *
+     * @param id the ID of the day routine
+     * @return a list of exercises
+     */
+    @GetMapping("/byDayRoutineId/{id}")
+    public ResponseEntity<List<Exercise>> getExercisesByDayRoutineId(@PathVariable Long id) {
+        List<Exercise> exercises = exerciseService.getExercisesByDayRoutineId(id);
+        if (exercises != null && !exercises.isEmpty()) {
+            return new ResponseEntity<>(exercises, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
 }
 

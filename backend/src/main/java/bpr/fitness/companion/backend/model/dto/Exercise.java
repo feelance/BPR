@@ -12,6 +12,7 @@ public class Exercise {
     private String description;
     private String category;
     private String imageUrl;
+    private Long dayRoutineId;
 
     private Set<Long> exerciseRecords;
     private List<Long> exerciseDayRoutine;

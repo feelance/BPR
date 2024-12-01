@@ -1,19 +1,27 @@
 package bpr.fitness.companion.backend.mapper.impl;
 
+import bpr.fitness.companion.backend.mapper.ExerciseDayRoutineMapper;
 import bpr.fitness.companion.backend.mapper.ExerciseMapper;
 import bpr.fitness.companion.backend.model.dto.Exercise;
+import bpr.fitness.companion.backend.model.dto.ExerciseDayRoutine;
+import bpr.fitness.companion.backend.model.entity.ExerciseDayRoutineEntity;
 import bpr.fitness.companion.backend.model.entity.ExerciseEntity;
+import bpr.fitness.companion.backend.repository.ExerciseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Mapper for all exercise operations
  */
 @Service
 public class ExerciseMapperImpl implements ExerciseMapper {
+
     /**
      * Maps to exercise Entity
      * @param exercise contains all exercise details
@@ -65,7 +73,16 @@ public class ExerciseMapperImpl implements ExerciseMapper {
             exercise.setDescription(exerciseEntity.getDescription());
             exercise.setCategory(exerciseEntity.getCategory());
             exercise.setImageUrl(exerciseEntity.getImageUrl());
+            exercise.setExerciseDayRoutine(mapToDayRoutineId(exerciseEntity.getExerciseDayRoutine()));
         }
         return exercise;
+    }
+
+    private List<Long> mapToDayRoutineId(List<ExerciseDayRoutineEntity> exerciseDayRoutine) {
+        Set<ExerciseDayRoutine> exerciseDayRoutineSet = null;
+        if(exerciseDayRoutine != null){
+            exerciseDayRoutineSet = new HashSet<>();
+            
+        }
     }
 }

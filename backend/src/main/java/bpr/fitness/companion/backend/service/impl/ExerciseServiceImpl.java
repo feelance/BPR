@@ -100,4 +100,15 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
         exerciseRepository.deleteById(id);
     }
+
+    /**
+     * Get exercises by day routine ID
+     * @param dayRoutineId Id of the exercise
+     * @return List<Exercise>
+     */
+    @Override
+    public List<Exercise> getExercisesByDayRoutineId(Long dayRoutineId) {
+        List<ExerciseEntity> exerciseEntities = exerciseRepository.findByDayRoutineId(dayRoutineId);
+        return mapper.mapToExerciseList(exerciseEntities);
+    }
 }
