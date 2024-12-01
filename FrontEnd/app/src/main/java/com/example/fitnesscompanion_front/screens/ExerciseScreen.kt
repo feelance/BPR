@@ -88,7 +88,7 @@ fun ExerciseScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "No routines found!",
+                            text = "No exercises yet!",
                             style = MaterialTheme.typography.body1
                         )
                         Button(onClick = {

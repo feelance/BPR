@@ -4,6 +4,7 @@ import bpr.fitness.companion.backend.mapper.ExerciseDayRoutineMapper;
 import bpr.fitness.companion.backend.mapper.ExerciseMapper;
 import bpr.fitness.companion.backend.model.dto.Exercise;
 import bpr.fitness.companion.backend.model.dto.ExerciseDayRoutine;
+import bpr.fitness.companion.backend.model.entity.DayRoutineEntity;
 import bpr.fitness.companion.backend.model.entity.ExerciseDayRoutineEntity;
 import bpr.fitness.companion.backend.model.entity.ExerciseEntity;
 import bpr.fitness.companion.backend.repository.ExerciseRepository;
@@ -37,8 +38,31 @@ public class ExerciseMapperImpl implements ExerciseMapper {
             exerciseEntity.setDescription(exercise.getDescription());
             exerciseEntity.setCategory(exercise.getCategory());
             exerciseEntity.setImageUrl(exercise.getImageUrl());
+            exerciseEntity.setExerciseDayRoutine(mapToExerciseDayRoutineEntity(exercise, exerciseEntity));
         }
         return exerciseEntity;
+    }
+
+
+    private List<ExerciseDayRoutineEntity> mapToExerciseDayRoutineEntity(Exercise exercise, ExerciseEntity exerciseEntity) {
+        List<ExerciseDayRoutineEntity> exerciseDayRoutineEntities = null;
+        if (exercise != null){
+            exerciseDayRoutineEntities = new ArrayList<>();
+            ExerciseDayRoutineEntity exerciseDayRoutineEntity = new ExerciseDayRoutineEntity();
+            exerciseDayRoutineEntity.setDayRoutine(mapToDayRoutineEntity(exercise.getDayRoutineId()));
+            exerciseDayRoutineEntity.setExercise(exerciseEntity);
+            exerciseDayRoutineEntities.add(exerciseDayRoutineEntity);
+        }
+        return exerciseDayRoutineEntities;
+    }
+
+    private DayRoutineEntity mapToDayRoutineEntity(Long dayRoutineId) {
+        DayRoutineEntity dayRoutineEntity = null;
+        if (dayRoutineId != null){
+            dayRoutineEntity = new DayRoutineEntity();
+            dayRoutineEntity.setId(dayRoutineId);
+        }
+        return dayRoutineEntity;
     }
 
     /**
@@ -73,16 +97,30 @@ public class ExerciseMapperImpl implements ExerciseMapper {
             exercise.setDescription(exerciseEntity.getDescription());
             exercise.setCategory(exerciseEntity.getCategory());
             exercise.setImageUrl(exerciseEntity.getImageUrl());
-            exercise.setExerciseDayRoutine(mapToDayRoutineId(exerciseEntity.getExerciseDayRoutine()));
+            exercise.setExerciseDayRoutine(mapToListDayRoutineId(exerciseEntity.getExerciseDayRoutine()));
         }
         return exercise;
     }
 
-    private List<Long> mapToDayRoutineId(List<ExerciseDayRoutineEntity> exerciseDayRoutine) {
-        Set<ExerciseDayRoutine> exerciseDayRoutineSet = null;
+    private List<Long> mapToListDayRoutineId(List<ExerciseDayRoutineEntity> exerciseDayRoutine) {
+        List<Long> exerciseDayRoutineList = null;
         if(exerciseDayRoutine != null){
-            exerciseDayRoutineSet = new HashSet<>();
-            
+            exerciseDayRoutineList = new ArrayList<>();
+            for (ExerciseDayRoutineEntity exerciseDayRoutineEntity : exerciseDayRoutine) {
+                exerciseDayRoutineList.add(mapToDayRoutineId(exerciseDayRoutineEntity));
+            }
         }
+        return exerciseDayRoutineList;
+    }
+
+    private Long mapToDayRoutineId(ExerciseDayRoutineEntity exerciseDayRoutineEntity) {
+       Long dayRoutineId = null;
+        if (exerciseDayRoutineEntity != null){
+            DayRoutineEntity exerciseDayRoutine  = exerciseDayRoutineEntity.getDayRoutine();
+            if (exerciseDayRoutine != null){
+                dayRoutineId = exerciseDayRoutine.getId();
+            }
+        }
+        return dayRoutineId;
     }
 }

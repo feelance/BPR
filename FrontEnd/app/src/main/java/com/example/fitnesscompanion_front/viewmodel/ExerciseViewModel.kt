@@ -62,8 +62,8 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
 
 class ExerciseViewModelFactory(private val dayRoutineId: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DayRoutineViewModel::class.java)) {
-            return DayRoutineViewModel(dayRoutineId) as T
+        if (modelClass.isAssignableFrom(ExerciseViewModel::class.java)) {
+            return ExerciseViewModel(dayRoutineId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
