@@ -21,3 +21,9 @@ val SelectedGrey = Color(0xFFB0B0B0)      // Grey for selected icons
 val PrimaryGrey = Color(0xFFB0B0B0)       // Soft grey color for highlights and active states
 val SecondaryGrey = Color(0xFF808080)     // Secondary accent for less emphasis
 val ErrorRed = Color(0xFFCF6679)          // Error color for UI alerts
+
+val DarkBrown = Color(0xFF5D4037) // Primary Dark Brown
+val LightBrown = Color(0xFFD7CCC8) // Secondary Light Brown
+val AccentBrown = Color(0xFF795548) // Tertiary Accent Brown
+val SurfaceBrown = Color(0xFF4E342E) // Surface Brown
+val BackgroundBrown = Color(0xFF3E2723) // Background Brown

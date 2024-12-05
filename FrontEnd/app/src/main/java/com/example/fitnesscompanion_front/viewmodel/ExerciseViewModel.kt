@@ -15,6 +15,10 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
     private val _exercises = MutableStateFlow<List<Exercise>>(emptyList())
     val exercises: StateFlow<List<Exercise>> = _exercises
 
+    private val _selectedExercise = MutableStateFlow<Exercise?>(null)
+    val selectedExercise: StateFlow<Exercise?> get() = _selectedExercise
+
+
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
@@ -26,6 +30,17 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
             fetchExercises()
         } else {
             _errorMessage.value = "Invalid Day Routine ID"
+        }
+    }
+
+    fun fetchExerciseById(exerciseId: Int) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.exerciseApi.getExerciseById(exerciseId)
+                _selectedExercise.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -59,6 +74,21 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
             }
         }
     }
+
+    fun updateExercise(updatedExercise: Exercise) {
+        viewModelScope.launch {
+            try {
+                // Call the API to update the exercise
+                RetrofitInstance.exerciseApi.updateExercise(updatedExercise.id, updatedExercise)
+
+                // Optionally refresh the list of exercises after updating
+                fetchExercises()
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the error or handle it appropriately
+            }
+        }
+    }
+
 }
 
 class ExerciseViewModelFactory(private val dayRoutineId: Int) : ViewModelProvider.Factory {
