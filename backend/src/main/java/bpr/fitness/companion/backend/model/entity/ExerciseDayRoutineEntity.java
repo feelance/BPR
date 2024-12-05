@@ -21,8 +21,4 @@ public class ExerciseDayRoutineEntity {
     @ManyToOne
     @JoinColumn(name = "day_routine_id")
     private DayRoutineEntity dayRoutine;
-
-    @Column(name = "exercise_order")
-    private int order;
-
 }

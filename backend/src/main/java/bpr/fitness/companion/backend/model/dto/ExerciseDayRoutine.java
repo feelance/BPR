@@ -7,5 +7,4 @@ public class ExerciseDayRoutine {
     private Long id;
     private Long exerciseId;
     private Long dayRoutineId;
-    private int order;
 }

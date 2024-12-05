@@ -13,3 +13,9 @@ data class WeekRoutineRequest(
     val notes: String,
     val userId: Int
 )
+
+data class UpdateWeekRoutineRequest(
+    val name: String,
+    val notes: String,
+    val userId: Int
+)

@@ -54,6 +54,18 @@ class DayRoutineViewModel(private val weekRoutineId: Int) : ViewModel() {
         }
     }
 
+    // Delete a Day Routine
+    fun deleteDayRoutine(dayRoutineId: Int) {
+        viewModelScope.launch {
+            try {
+                RetrofitInstance.dayRoutineApi.deleteDayRoutine(dayRoutineId)
+                _dayRoutines.value = _dayRoutines.value.filter { it.id != dayRoutineId }
+            } catch (e: Exception) {
+                _errorMessage.value = e.localizedMessage ?: "Failed to delete day routine"
+            }
+        }
+    }
+
 
 }
 

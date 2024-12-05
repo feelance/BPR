@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface WeekRoutineRepository extends JpaRepository<WeekRoutineEntity, Long> {
     List<WeekRoutineEntity> findByAccountId(Long id);
+
+
 }

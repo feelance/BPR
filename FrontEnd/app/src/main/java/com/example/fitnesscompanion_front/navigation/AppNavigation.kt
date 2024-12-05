@@ -12,13 +12,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.fitnesscompanion_front.BottomNavigationBar
 import com.example.fitnesscompanion_front.Screen
 import com.example.fitnesscompanion_front.screens.AddDayRoutineScreen
+import com.example.fitnesscompanion_front.screens.AddExerciseScreen
 import com.example.fitnesscompanion_front.screens.AddWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.DayRoutineScreen
+import com.example.fitnesscompanion_front.screens.EditWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.ExerciseScreen
 import com.example.fitnesscompanion_front.screens.HomeScreen
 import com.example.fitnesscompanion_front.screens.LoginScreen
@@ -36,8 +39,9 @@ fun AppNavigation() {
     // Set up the Scaffold with BottomNavigation
     Scaffold(
         bottomBar = {
-            if (isAuthenticated){
-                BottomNavigationBar(navController) }
+            if (isAuthenticated) {
+                BottomNavigationBar(navController)
+            }
         }
     ) { innerPadding ->
         NavHost(
@@ -86,18 +90,49 @@ fun AppNavigation() {
                 val viewModel: DayRoutineViewModel = viewModel(factory = DayRoutineViewModelFactory(weekRoutineId))
                 AddDayRoutineScreen(navController, weekRoutineId, viewModel)
             }
+
+            navigation(startDestination = "exercises/{dayRoutineId}/{dayRoutineName}", route = "exerciseGraph") {
+                composable(
+                    route = "exercises/{dayRoutineId}/{dayRoutineName}",
+                    arguments = listOf(
+                        navArgument("dayRoutineName") { type = NavType.StringType },
+                        navArgument("dayRoutineId") { type = NavType.IntType }
+                    )
+                ) { backStackEntry ->
+                    val dayRoutineName = backStackEntry.arguments?.getString("dayRoutineName") ?: "Unknown Day Routine"
+                    val dayRoutineId = backStackEntry.arguments?.getInt("dayRoutineId") ?: 0
+
+                    // Scope the ExerciseViewModel to the "exerciseGraph"
+                    val parentEntry = remember { navController.getBackStackEntry("exerciseGraph") }
+                    val viewModel: ExerciseViewModel = viewModel(parentEntry, factory = ExerciseViewModelFactory(dayRoutineId))
+
+                    ExerciseScreen(navController, dayRoutineName, dayRoutineId, viewModel)
+                }
+
+                composable(
+                    route = "add_exercise/{dayRoutineId}",
+                    arguments = listOf(
+                        navArgument("dayRoutineId") { type = NavType.IntType }
+                    )
+                ) { backStackEntry ->
+                    val dayRoutineId = backStackEntry.arguments?.getInt("dayRoutineId") ?: 0
+
+                    // Use the same ExerciseViewModel scoped to "exerciseGraph"
+                    val parentEntry = remember { navController.getBackStackEntry("exerciseGraph") }
+                    val viewModel: ExerciseViewModel = viewModel(parentEntry, factory = ExerciseViewModelFactory(dayRoutineId))
+
+                    AddExerciseScreen(navController = navController, viewModel, dayRoutineId)
+                }
+            }
+
             composable(
-                route = "exercises/{dayRoutineId}/{dayRoutineName}",
+                route = "edit_week_routine/{routineId}",
                 arguments = listOf(
-                    navArgument("dayRoutineName") { type = NavType.StringType },
-                    navArgument("dayRoutineId") { type = NavType.IntType }
+                    navArgument("routineId") { type = NavType.IntType }
                 )
             ) { backStackEntry ->
-                val dayRoutineName = backStackEntry.arguments?.getString("dayRoutineName") ?: "Unknown Day Routine"
-                val dayRoutineId = backStackEntry.arguments?.getInt("dayRoutineId") ?: 0
-
-                val viewModel: ExerciseViewModel = viewModel(factory = ExerciseViewModelFactory(dayRoutineId))
-                ExerciseScreen(navController, dayRoutineName, dayRoutineId, viewModel)
+                val routineId = backStackEntry.arguments?.getInt("routineId") ?: 0
+                EditWeekRoutineScreen(navController = navController, routineId = routineId)
             }
 
         }

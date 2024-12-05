@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.tracing.perfetto.handshake)
 
     // Testing
     testImplementation("junit:junit:4.13.2")

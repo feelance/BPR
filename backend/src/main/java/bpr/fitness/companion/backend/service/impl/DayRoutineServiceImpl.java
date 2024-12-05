@@ -6,6 +6,7 @@ import bpr.fitness.companion.backend.mapper.DayRoutineMapper;
 import bpr.fitness.companion.backend.model.dto.DayRoutine;
 import bpr.fitness.companion.backend.model.entity.DayRoutineEntity;
 import bpr.fitness.companion.backend.repository.DayRoutineRepository;
+import bpr.fitness.companion.backend.repository.ExerciseDayRoutineRepository;
 import bpr.fitness.companion.backend.service.DayRoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,11 +23,13 @@ public class DayRoutineServiceImpl implements DayRoutineService {
 
     private final DayRoutineRepository dayRoutineRepository;
     private final DayRoutineMapper mapper;
+    private final ExerciseDayRoutineRepository exerciseDayRoutineRepository;
 
     @Autowired
-    public DayRoutineServiceImpl(DayRoutineRepository DayRoutineRepository, DayRoutineMapper mapper) {
+    public DayRoutineServiceImpl(DayRoutineRepository DayRoutineRepository, DayRoutineMapper mapper, ExerciseDayRoutineRepository exerciseDayRoutineRepository) {
         this.dayRoutineRepository = DayRoutineRepository;
         this.mapper = mapper;
+        this.exerciseDayRoutineRepository = exerciseDayRoutineRepository;
     }
     /**
      * Create day routine
@@ -94,7 +97,13 @@ public class DayRoutineServiceImpl implements DayRoutineService {
         if (!dayRoutineRepository.existsById(id)) {
             throw new DayRoutineNotFoundException("DayRoutine with id " + id + "not found");
         }
-        dayRoutineRepository.deleteById(id);
+        try{
+            exerciseDayRoutineRepository.deleteByDayRoutineId(id);
+            dayRoutineRepository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            dayRoutineRepository.deleteById(id);
+        }
     }
 
     /**

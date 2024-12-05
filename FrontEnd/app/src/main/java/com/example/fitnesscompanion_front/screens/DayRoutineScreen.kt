@@ -1,17 +1,23 @@
 package com.example.fitnesscompanion_front.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -104,6 +110,13 @@ fun DayRoutineScreen(
                         items(dayRoutines) { dayRoutine ->
                             DayRoutineCard(
                                 dayRoutineName = dayRoutine.name,
+                                onEditClick = {
+                                    navController.navigate("edit_week_routine/${dayRoutine.id}")
+                                },
+                                onDeleteClick = {
+                                    viewModel.deleteDayRoutine(dayRoutine.id)
+
+                                },
                                 onClick = {
                                     navController.navigate("exercises/${dayRoutine.id}/${dayRoutine.name}")
                                 }
@@ -121,20 +134,63 @@ fun DayRoutineScreen(
 fun DayRoutineCard(
     dayRoutineName: String,
     modifier: Modifier = Modifier,
+    onEditClick: () -> Unit = {},
+    onDeleteClick: () -> Unit = {},
     onClick: () -> Unit = {}
 ) {
     Card(
-        elevation = 4.dp,
-        modifier = modifier
+        elevation = 8.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .clickable { onClick() }
+            .clickable { onClick() },
+        backgroundColor = Color.DarkGray
     ) {
-        Text(
-            text = dayRoutineName,
-            modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.body1
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+        ) {
+
+            // Dark overlay for text readability
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onClick() }
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = dayRoutineName,
+                    style = MaterialTheme.typography.h6,
+                    color = Color.White
+                )
+                Row {
+                    IconButton(onClick = onEditClick) {
+                        Icon(
+                            painter = painterResource(android.R.drawable.ic_menu_edit), // Replace with your edit icon
+                            contentDescription = "Edit",
+                            tint = Color.White
+                        )
+                    }
+                    IconButton(onClick = onDeleteClick) {
+                        Icon(
+                            painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
+                            contentDescription = "Delete",
+                            tint = Color.White
+                        )
+                    }
+                }
+            }
+        }
     }
 }
+
 

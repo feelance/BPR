@@ -22,7 +22,6 @@ public class ExerciseDayRoutineMapperImpl implements ExerciseDayRoutineMapper {
         if (routine != null) {
             entity = new ExerciseDayRoutineEntity();
             entity.setId(routine.getId());
-            entity.setOrder(routine.getOrder());
         }
         return entity;
     }
@@ -38,7 +37,6 @@ public class ExerciseDayRoutineMapperImpl implements ExerciseDayRoutineMapper {
         if (entity != null) {
             routine = new ExerciseDayRoutine();
             routine.setId(entity.getId());
-            routine.setOrder(entity.getOrder());
         }
         return routine;
     }

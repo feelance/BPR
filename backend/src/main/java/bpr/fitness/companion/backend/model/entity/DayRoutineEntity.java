@@ -15,7 +15,11 @@ public class DayRoutineEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "dayRoutine")
+    @OneToMany(
+            mappedBy = "dayRoutine",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<ExerciseDayRoutineEntity> exerciseDayRoutines;
 
     @ManyToOne

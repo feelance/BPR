@@ -83,8 +83,9 @@ public class WeekRoutineServiceImpl implements WeekRoutineService {
         Optional <WeekRoutineEntity> optWeekRoutineEntity = weekRoutineRepository.findById(id);
         WeekRoutineEntity weekRoutineEntity = null;
         if (optWeekRoutineEntity.isPresent()){
-            weekRoutineDetails.setId(id);
-            weekRoutineEntity = mapper.mapToWeekRoutineEntity(weekRoutineDetails);
+            weekRoutineEntity = optWeekRoutineEntity.get();
+            weekRoutineEntity.setName(weekRoutineDetails.getName());
+            weekRoutineEntity.setNotes(weekRoutineDetails.getNotes());
             weekRoutineRepository.save(weekRoutineEntity);
         } else {
             throw new WeekRoutineNotFoundException("WeekRoutine with id " + id + "not found");

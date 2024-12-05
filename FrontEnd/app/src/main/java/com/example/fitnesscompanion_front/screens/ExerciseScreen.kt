@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.fitnesscompanion_front.Screen
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 
@@ -34,7 +35,7 @@ fun ExerciseScreen(
 
     // Fetch data when screen starts
     LaunchedEffect(Unit) {
-        viewModel.fetchExercises(dayRoutineId)
+        viewModel.fetchExercises()
     }
 
     Scaffold(
@@ -51,7 +52,6 @@ fun ExerciseScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // Handle FAB click, e.g., navigate to an Add Day Routine screen
                     navController.navigate("add_exercise/$dayRoutineId")
                 }
             ) {

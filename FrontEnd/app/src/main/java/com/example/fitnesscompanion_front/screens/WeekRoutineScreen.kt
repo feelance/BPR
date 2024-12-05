@@ -47,28 +47,40 @@ fun WeekRoutineScreen(
             Text("Your Weekly Routine", style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(16.dp))
             if (weeklyRoutines.isEmpty()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                Text(
+                    "No routines available. Add one using the button below.",
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    style = MaterialTheme.typography.body1
+                )
             } else {
                 LazyColumn {
                     items(weeklyRoutines) { routine ->
                         RoutineCard(
                             routineText = routine.name,
-                            onClick = { navController.navigate("day_routines/${routine.id}/${routine.name}")},
-                            backgroundImageRes = R.drawable.gym_logo
+                            onEditClick = {
+                                navController.navigate("edit_week_routine/${routine.id}")
+                            },
+                            onDeleteClick = {
+                                viewModel.deleteRoutine(routine.id)
+
+                            },
+                            onClick = {
+                                navController.navigate("day_routines/${routine.id}/${routine.name}")
+                            },
                         )
-                        }
                     }
                 }
             }
         }
     }
-
+}
 
 @Composable
 fun RoutineCard(
     routineText: String,
     onClick: () -> Unit,
-    backgroundImageRes: Int // Add a parameter for the background image resource
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit,
 ) {
     Card(
         elevation = 8.dp,
@@ -77,20 +89,13 @@ fun RoutineCard(
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable { onClick() },
-        backgroundColor = Color.DarkGray // Set dark background for fallback
+        backgroundColor = Color.DarkGray
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp) // Set a fixed height for the card
+                .height(80.dp)
         ) {
-            // Background Image
-            Image(
-                painter = painterResource(id = backgroundImageRes),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
 
             // Dark overlay for text readability
             Box(
@@ -99,23 +104,38 @@ fun RoutineCard(
                     .background(Color.Black.copy(alpha = 0.5f))
             )
 
-            // Text content
-            Column(
+            // Text content and action buttons
+            Row(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = routineText,
-                    style = MaterialTheme.typography.h6,
-                    color = Color.White // White text for contrast
-                )
+                Column {
+                    Text(
+                        text = routineText,
+                        style = MaterialTheme.typography.h6,
+                        color = Color.White
+                    )
+                }
+                Row {
+                    IconButton(onClick = onEditClick) {
+                        Icon(
+                            painter = painterResource(android.R.drawable.ic_menu_edit), // Replace with your edit icon
+                            contentDescription = "Edit",
+                            tint = Color.White
+                        )
+                    }
+                    IconButton(onClick = onDeleteClick) {
+                        Icon(
+                            painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
+                            contentDescription = "Delete",
+                            tint = Color.White
+                        )
+                    }
+                }
             }
         }
     }
 }
-
-
-

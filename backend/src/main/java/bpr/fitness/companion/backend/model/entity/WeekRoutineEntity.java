@@ -17,7 +17,7 @@ public class WeekRoutineEntity {
     private String name;
     private String notes;
 
-    @OneToMany(mappedBy = "weekRoutine", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "weekRoutine", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<DayRoutineEntity> dayRoutines;
 
     @ManyToOne
