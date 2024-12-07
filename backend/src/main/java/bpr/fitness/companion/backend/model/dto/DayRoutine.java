@@ -12,6 +12,7 @@ import java.util.Set;
 public class DayRoutine {
     private Long id;
     private String name;
+    private String notes;
     private Set<Long> exerciseDayRoutines = new HashSet<>();;
     private Long weekRoutineId;
 }

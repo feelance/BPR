@@ -80,8 +80,9 @@ public class DayRoutineServiceImpl implements DayRoutineService {
         Optional <DayRoutineEntity> optDayRoutineEntity = dayRoutineRepository.findById(id);
         DayRoutineEntity dayRoutineEntity = null;
         if (optDayRoutineEntity.isPresent()){
-            dayRoutineDetails.setId(id);
-            dayRoutineEntity = mapper.mapToDayRoutineEntity(dayRoutineDetails);
+            dayRoutineEntity = optDayRoutineEntity.get();
+            dayRoutineEntity.setName(dayRoutineDetails.getName());
+            dayRoutineEntity.setNotes(dayRoutineDetails.getNotes());
             dayRoutineRepository.save(dayRoutineEntity);
         } else {
             throw new DayRoutineNotFoundException("DayRoutine with id " + id + "not found");

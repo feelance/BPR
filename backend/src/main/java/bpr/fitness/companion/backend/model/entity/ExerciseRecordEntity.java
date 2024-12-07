@@ -13,13 +13,8 @@ public class ExerciseRecordEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String name;
-
-    private String notes;
-
     @OneToMany(mappedBy = "exerciseRecord", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Set<ExerciseSeriesEntity> day_routines;
+    private Set<ExerciseEntity> exercise;
 
     @ManyToOne
     @JoinColumn(name = "account_id")

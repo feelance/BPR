@@ -14,6 +14,7 @@ public class DayRoutineEntity {
 
     @Column(unique = true, nullable = false)
     private String name;
+    private String notes;
 
     @OneToMany(
             mappedBy = "dayRoutine",

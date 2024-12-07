@@ -1,5 +1,6 @@
 package com.example.fitnesscompanion_front.retrofit
 import com.example.fitnesscompanion_front.model.Exercise
+import com.example.fitnesscompanion_front.model.ExerciseRecord
 import com.example.fitnesscompanion_front.model.request.ExerciseRequest
 import com.example.fitnesscompanion_front.model.response.GenericResponse
 import retrofit2.http.Body
@@ -28,4 +29,7 @@ interface ExerciseApi {
 
     @DELETE("exercises/{id}")
     suspend fun deleteExercise(@Path("id") exerciseId: Int)
+
+    @POST("/exerciseRecords")
+    suspend fun saveExerciseRecord(exerciseRecord: ExerciseRecord): Exercise
 }

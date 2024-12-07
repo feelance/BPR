@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fitnesscompanion_front.model.Exercise
+import com.example.fitnesscompanion_front.model.ExerciseRecord
 import com.example.fitnesscompanion_front.model.request.ExerciseRequest
 import com.example.fitnesscompanion_front.retrofit.RetrofitInstance
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
 
@@ -24,6 +26,9 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
+
+    private val _feedbackMessage = MutableStateFlow<String?>(null)
+    val feedbackMessage: StateFlow<String?> = _feedbackMessage
 
     init {
         if (dayRoutineId > 0) {
@@ -88,6 +93,47 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
             }
         }
     }
+
+    fun deleteExercise(id: Int) {
+        viewModelScope.launch {
+            try {
+                RetrofitInstance.exerciseApi.deleteExercise(id)
+                _exercises.value = _exercises.value.filter { it.id != id }
+            } catch (e: HttpException) {
+                if (e.code() == 404) {
+                    println("Exercise not found: $id")
+                    _exercises.value = _exercises.value.filter { it.id != id }
+                } else {
+                    println("Http error: ${e.message()}")
+                }
+            } catch (e: Exception) {
+                println("Unexpected error: ${e.message}")
+            }
+        }
+    }
+
+    fun storeExerciseRecord(exerciseId: Int, repetitions: Int, weight: Float) {
+        viewModelScope.launch {
+            try {
+                // Create a new ExerciseRecord object
+                val exerciseRecord = ExerciseRecord(
+                    exerciseId = exerciseId,
+                    repetitions = repetitions,
+                    weight = weight
+                )
+
+                // Save the record using the repository
+                RetrofitInstance.exerciseApi.saveExerciseRecord(exerciseRecord)
+
+                // Optionally, log success or update UI state
+                _feedbackMessage.value = "Record saved successfully!"
+            } catch (e: Exception) {
+                // Handle any errors during the save operation
+                _errorMessage.value = e.localizedMessage ?: "Failed to save record"
+            }
+        }
+    }
+
 
 }
 

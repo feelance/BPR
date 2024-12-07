@@ -1,10 +1,12 @@
 package com.example.fitnesscompanion_front.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -12,6 +14,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -81,7 +85,7 @@ fun ExerciseScreen(
                     )
                 }
 
-                exercises.isEmpty() -> { // Check if the list is empty
+                exercises.isEmpty() -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
@@ -100,41 +104,102 @@ fun ExerciseScreen(
                 }
 
                 else -> {
-                    LazyColumn {
+                    LazyColumn(
+                        modifier = Modifier.weight(1f) // Adjust height to leave space for the button
+                    ) {
                         items(exercises) { exercise ->
-                            DayRoutineCard(
-                                dayRoutineName = exercise.name,
-                                onClick = {
-                                    navController.navigate("exercises/${dayRoutineId}/${dayRoutineName}")
+                            ExerciseCard(
+                                exerciseName = exercise.name,
+                                onEditClick = {
+                                    navController.navigate("edit_exercise/${exercise.id}")
+                                },
+                                onDeleteClick = {
+                                    viewModel.deleteExercise(exercise.id)
                                 }
                             )
                         }
                     }
                 }
             }
+
+            // "Start Workout" button at the bottom
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = {
+                    navController.navigate("workout_screen/$dayRoutineId")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text("Start Workout")
+            }
         }
     }
 }
 
 
+
 @Composable
 fun ExerciseCard(
-    dayRoutineName: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    exerciseName: String,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit,
 ) {
     Card(
-        elevation = 4.dp,
-        modifier = modifier
+        elevation = 8.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable { onClick() }
+            .padding(vertical = 8.dp),
+        backgroundColor = Color.DarkGray
     ) {
-        Text(
-            text = dayRoutineName,
-            modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.body1
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+        ) {
+
+            // Dark overlay for text readability
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+            )
+
+            // Text content and action buttons
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
+                    Text(
+                        text = exerciseName,
+                        style = MaterialTheme.typography.h6,
+                        color = Color.White
+                    )
+                }
+                Row {
+                    IconButton(onClick = onEditClick) {
+                        Icon(
+                            painter = painterResource(android.R.drawable.ic_menu_edit), // Replace with your edit icon
+                            contentDescription = "Edit",
+                            tint = Color.White
+                        )
+                    }
+                    IconButton(onClick = onDeleteClick) {
+                        Icon(
+                            painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
+                            contentDescription = "Delete",
+                            tint = Color.White
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

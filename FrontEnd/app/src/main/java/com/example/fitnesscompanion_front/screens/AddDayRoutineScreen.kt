@@ -27,6 +27,7 @@ fun AddDayRoutineScreen(
     viewModel: DayRoutineViewModel = viewModel()
 ) {
     var dayRoutineName by remember { mutableStateOf("") }
+    var notes by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -58,7 +59,7 @@ fun AddDayRoutineScreen(
             Button(
                 onClick = {
                     if (dayRoutineName.isNotBlank()) {
-                        val dayRoutine  = DayRoutine(name = dayRoutineName, weekRoutineId = weekRoutineId)
+                        val dayRoutine  = DayRoutine(name = dayRoutineName, weekRoutineId = weekRoutineId, notes = notes)
                         viewModel.saveDayRoutine(dayRoutine, weekRoutineId)
                         navController.popBackStack()
                     } else {

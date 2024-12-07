@@ -3,6 +3,7 @@ package bpr.fitness.companion.backend.mapper.impl;
 import bpr.fitness.companion.backend.mapper.ExerciseRecordMapper;
 import bpr.fitness.companion.backend.model.dto.ExerciseRecord;
 import bpr.fitness.companion.backend.model.entity.ExerciseDayRoutineEntity;
+import bpr.fitness.companion.backend.model.entity.ExerciseEntity;
 import bpr.fitness.companion.backend.model.entity.ExerciseRecordEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -23,8 +24,7 @@ public class ExerciseRecordMapperImpl implements ExerciseRecordMapper {
         if (record != null) {
             entity = new ExerciseRecordEntity();
             entity.setId(record.getId());
-            entity.setName(record.getName());
-            entity.setNotes(record.getNotes());
+            entity.setExercise(new ExerciseEntity(record.getExercises().get));
         }
         return entity;
     }

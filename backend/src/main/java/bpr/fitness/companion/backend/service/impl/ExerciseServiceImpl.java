@@ -81,8 +81,10 @@ public class ExerciseServiceImpl implements ExerciseService {
         Optional <ExerciseEntity> optExerciseEntity = exerciseRepository.findById(id);
         ExerciseEntity exerciseEntity = null;
         if (optExerciseEntity.isPresent()){
-            exerciseDetails.setId(id);
-            exerciseEntity = mapper.mapToExerciseEntity(exerciseDetails);
+            exerciseEntity = optExerciseEntity.get();
+            exerciseEntity.setName(exerciseDetails.getName());
+            exerciseEntity.setDescription(exerciseDetails.getDescription());
+            exerciseEntity.setCategory(exerciseDetails.getCategory());
             exerciseRepository.save(exerciseEntity);
         } else {
             throw new ExerciseNotFoundException("Exercise with id " + id + "not found");

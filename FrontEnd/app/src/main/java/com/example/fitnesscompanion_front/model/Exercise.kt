@@ -6,3 +6,10 @@ data class Exercise(
     val category: String,
     val description: String
 )
+
+
+data class ExerciseRecord(
+    val exerciseId: Int,
+    val repetitions: Int,
+    val weight: Float
+)

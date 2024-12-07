@@ -8,6 +8,6 @@ public class ExerciseRecord {
     private Long id;
     private String name;
     private String notes;
-    private Set<Long> dayRoutines;
+    private Set<Long> exercises;
     private Long userId;
 }

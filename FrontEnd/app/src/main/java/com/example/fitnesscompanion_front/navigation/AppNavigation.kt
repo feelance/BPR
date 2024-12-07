@@ -21,11 +21,14 @@ import com.example.fitnesscompanion_front.screens.AddDayRoutineScreen
 import com.example.fitnesscompanion_front.screens.AddExerciseScreen
 import com.example.fitnesscompanion_front.screens.AddWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.DayRoutineScreen
+import com.example.fitnesscompanion_front.screens.EditDayRoutineScreen
+import com.example.fitnesscompanion_front.screens.EditExerciseScreen
 import com.example.fitnesscompanion_front.screens.EditWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.ExerciseScreen
 import com.example.fitnesscompanion_front.screens.HomeScreen
 import com.example.fitnesscompanion_front.screens.LoginScreen
 import com.example.fitnesscompanion_front.screens.WeekRoutineScreen
+import com.example.fitnesscompanion_front.screens.WorkoutScreen
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModelFactory
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
@@ -133,6 +136,41 @@ fun AppNavigation() {
             ) { backStackEntry ->
                 val routineId = backStackEntry.arguments?.getInt("routineId") ?: 0
                 EditWeekRoutineScreen(navController = navController, routineId = routineId)
+            }
+
+            composable(
+                route = "edit_exercise/{exerciseId}",
+                arguments = listOf(
+                    navArgument("exerciseId") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: 0
+                val viewModel: ExerciseViewModel = viewModel(factory = ExerciseViewModelFactory(exerciseId))
+                EditExerciseScreen(navController = navController, exerciseId = exerciseId, viewModel = viewModel)
+            }
+
+            composable(
+                route = "edit_day_routine/{weekRoutineId}/{dayRoutineId}",
+                arguments = listOf(
+                    navArgument("weekRoutineId") { type = NavType.IntType },
+                    navArgument("dayRoutineId") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                val weekRoutineId = backStackEntry.arguments?.getInt("routineId") ?: 0
+                val dayRoutineId = backStackEntry.arguments?.getInt("dayRoutineId") ?: 0
+                val viewModel: DayRoutineViewModel = viewModel(factory = DayRoutineViewModelFactory(weekRoutineId))
+                EditDayRoutineScreen(navController = navController, dayRoutineId, viewModel)
+            }
+
+            composable(
+                route = "workout_screen/{dayRoutineId}",
+                arguments = listOf(
+                    navArgument("dayRoutineId") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                val dayRoutineId = backStackEntry.arguments?.getInt("dayRoutineId") ?: 0
+                val viewModel: ExerciseViewModel = viewModel(factory = ExerciseViewModelFactory(dayRoutineId))
+                WorkoutScreen(navController = navController, dayRoutineId, viewModel)
             }
 
         }

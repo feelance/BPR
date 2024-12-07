@@ -26,6 +26,7 @@ public class DayRoutineMapperImpl implements DayRoutineMapper {
             dayRoutineEntity = new DayRoutineEntity();
             dayRoutineEntity.setId(dayRoutine.getId());
             dayRoutineEntity.setName(dayRoutine.getName());
+            dayRoutineEntity.setNotes(dayRoutine.getNotes());
             dayRoutineEntity.setWeekRoutine(mapToWeekRoutineEntity(dayRoutine.getWeekRoutineId()));
 
         }
@@ -77,6 +78,7 @@ public class DayRoutineMapperImpl implements DayRoutineMapper {
             dayRoutine = new DayRoutine();
             dayRoutine.setId(dayRoutineEntity.getId());
             dayRoutine.setName(dayRoutineEntity.getName());
+            dayRoutine.setNotes(dayRoutineEntity.getNotes());
             dayRoutine.setWeekRoutineId(mapToWeekRoutine(dayRoutineEntity.getWeekRoutine()));
         }
         return dayRoutine;

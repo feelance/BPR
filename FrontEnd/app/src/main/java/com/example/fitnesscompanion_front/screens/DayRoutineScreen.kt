@@ -111,7 +111,7 @@ fun DayRoutineScreen(
                             DayRoutineCard(
                                 dayRoutineName = dayRoutine.name,
                                 onEditClick = {
-                                    navController.navigate("edit_week_routine/${dayRoutine.id}")
+                                    navController.navigate("edit_day_routine/$weekRoutineId/${dayRoutine.id}")
                                 },
                                 onDeleteClick = {
                                     viewModel.deleteDayRoutine(dayRoutine.id)
