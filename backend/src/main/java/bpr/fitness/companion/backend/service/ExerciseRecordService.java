@@ -38,5 +38,12 @@ public interface ExerciseRecordService {
      * @param id of the exercise record we want to delete
      */
     void deleteExerciseRecord(Long id);
+
+    /**
+     * Get exercise record by exercise id
+     * @param id
+     * @return
+     */
+    List<ExerciseRecord> getExerciseRecordByExerciseId(Long id);
 }
 

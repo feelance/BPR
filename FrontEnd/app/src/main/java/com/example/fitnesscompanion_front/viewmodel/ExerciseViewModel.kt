@@ -11,15 +11,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.time.LocalDate
+import java.util.Date
 
 class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
 
     private val _exercises = MutableStateFlow<List<Exercise>>(emptyList())
     val exercises: StateFlow<List<Exercise>> = _exercises
 
+    private val _savedRecords = MutableStateFlow<List<ExerciseRecord>>(emptyList())
+    val savedRecords: StateFlow<List<ExerciseRecord>> = _savedRecords
+
     private val _selectedExercise = MutableStateFlow<Exercise?>(null)
     val selectedExercise: StateFlow<Exercise?> get() = _selectedExercise
-
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -55,6 +59,33 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
                 _isLoading.value = true
                 val response = RetrofitInstance.exerciseApi.getExercisesByDayRoutineId(dayRoutineId)
                 _exercises.value = response
+                if (response.isNotEmpty()) {
+                    _selectedExercise.value = response.first()
+                    fetchExerciseRecords()
+                } else {
+                    _errorMessage.value = "No exercises found for this routine"
+                }
+            } catch (e: Exception) {
+                _errorMessage.value = e.localizedMessage ?: "Error fetching exercises"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+
+    fun fetchExerciseRecords() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                val response = selectedExercise.value?.let {
+                    RetrofitInstance.exerciseApi.getExerciseRecordsByExerciseId(
+                        it.id)
+                }
+                if (response != null) {
+                    _savedRecords.value = response
+                }
+
             } catch (e: Exception) {
                 _errorMessage.value = e.localizedMessage ?: "Error fetching exercises"
             } finally {
@@ -73,7 +104,7 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
                     dayRoutineId = dayRoutineId
                 )
                 RetrofitInstance.exerciseApi.saveExercise(request)
-                _exercises.value = _exercises.value + exercise // Update list locally
+                fetchExerciseRecords()
             } catch (e: Exception) {
                 _errorMessage.value = e.localizedMessage ?: "Error saving exercise"
             }
@@ -124,6 +155,7 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
 
                 // Save the record using the repository
                 RetrofitInstance.exerciseApi.saveExerciseRecord(exerciseRecord)
+                fetchExerciseRecords()
 
                 // Optionally, log success or update UI state
                 _feedbackMessage.value = "Record saved successfully!"

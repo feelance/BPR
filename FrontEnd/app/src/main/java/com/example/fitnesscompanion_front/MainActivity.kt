@@ -4,6 +4,7 @@ package com.example.fitnesscompanion_front
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -32,12 +33,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FitnessCompanionFrontTheme {
-                // Set up the navigation
-                AppNavigation()
+                // Use a Surface to set a global background color
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background // Use the background from your theme
+                ) {
+                    AppNavigation()
+                }
             }
         }
     }
 }
+
 
 
 

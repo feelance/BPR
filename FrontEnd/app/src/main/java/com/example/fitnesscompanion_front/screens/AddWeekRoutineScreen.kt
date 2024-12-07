@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.Screen
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -28,16 +29,14 @@ fun AddWeekRoutineScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Add Week Routine") }
-            )
-        }
-    ) {
+    ThemedScaffold(
+        title = "Add Week Routine",
+        navController = navController
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(16.dp)
         ) {
             Text("Enter Week Routine Details", style = MaterialTheme.typography.h6)
@@ -79,12 +78,10 @@ fun AddWeekRoutineScreen(
                                 navController.navigate(Screen.WeeklyRoutine.route) {
                                     popUpTo(Screen.WeeklyRoutine.route) { inclusive = true }
                                 }
-                                Screen.WeeklyRoutine.route
                             } catch (e: Exception) {
                                 errorMessage = e.localizedMessage ?: "An error occurred"
                             } finally {
                                 isLoading = false
-
                             }
                         }
                     },
@@ -106,4 +103,3 @@ fun AddWeekRoutineScreen(
         }
     }
 }
-

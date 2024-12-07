@@ -22,7 +22,7 @@ public class ExerciseEntity {
 
 
     @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ExerciseSeriesEntity> exerciseRecords;
+    private Set<ExerciseRecordEntity> exerciseRecords;
 
     @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExerciseDayRoutineEntity> exerciseDayRoutine;

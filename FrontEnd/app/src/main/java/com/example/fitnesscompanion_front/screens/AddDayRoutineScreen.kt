@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.Screen
 import com.example.fitnesscompanion_front.model.DayRoutine
 import com.example.fitnesscompanion_front.model.request.DayRoutineRequest
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -29,24 +30,17 @@ fun AddDayRoutineScreen(
     var dayRoutineName by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Add Day Routine") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        }
-    ) {
+    ThemedScaffold(
+        title = "Add Day Routine",
+        navController = navController
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            // TextField for input
+            // Input field for Day Routine Name
             TextField(
                 value = dayRoutineName,
                 onValueChange = { dayRoutineName = it },
@@ -55,15 +49,28 @@ fun AddDayRoutineScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Input field for Notes
+            TextField(
+                value = notes,
+                onValueChange = { notes = it },
+                label = { Text("Notes (Optional)") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Save Button
             Button(
                 onClick = {
                     if (dayRoutineName.isNotBlank()) {
-                        val dayRoutine  = DayRoutine(name = dayRoutineName, weekRoutineId = weekRoutineId, notes = notes)
+                        val dayRoutine = DayRoutine(
+                            name = dayRoutineName,
+                            weekRoutineId = weekRoutineId,
+                            notes = notes
+                        )
                         viewModel.saveDayRoutine(dayRoutine, weekRoutineId)
                         navController.popBackStack()
                     } else {
-                        // Handle empty input (e.g., show a Snackbar or error message)
+                        // Handle empty input
                     }
                 },
                 modifier = Modifier.align(Alignment.End)
@@ -73,4 +80,5 @@ fun AddDayRoutineScreen(
         }
     }
 }
+
 

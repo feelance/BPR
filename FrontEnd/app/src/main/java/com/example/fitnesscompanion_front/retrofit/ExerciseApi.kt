@@ -31,5 +31,8 @@ interface ExerciseApi {
     suspend fun deleteExercise(@Path("id") exerciseId: Int)
 
     @POST("/exerciseRecords")
-    suspend fun saveExerciseRecord(exerciseRecord: ExerciseRecord): Exercise
+    suspend fun saveExerciseRecord(@Body exerciseRecord: ExerciseRecord): Exercise
+
+    @GET("/exerciseRecords/byExerciseId/{id}")
+    suspend fun getExerciseRecordsByExerciseId(@Path("id") exerciseId: Int): List<ExerciseRecord>
 }

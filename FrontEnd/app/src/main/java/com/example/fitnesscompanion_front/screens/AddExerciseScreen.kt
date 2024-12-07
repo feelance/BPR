@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.Screen
 import com.example.fitnesscompanion_front.model.Exercise
 import com.example.fitnesscompanion_front.model.request.ExerciseRequest
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -27,21 +28,14 @@ fun AddExerciseScreen(
     var category by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Add Exercise") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        }
-    ) {
+    ThemedScaffold(
+        title = "Add Exercise",
+        navController = navController
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(16.dp)
         ) {
             // TextField for Exercise Name
@@ -53,7 +47,7 @@ fun AddExerciseScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // TextField for Reps
+            // TextField for Exercise Category
             TextField(
                 value = category,
                 onValueChange = { category = it },
@@ -62,7 +56,7 @@ fun AddExerciseScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // TextField for Sets
+            // TextField for Description
             TextField(
                 value = description,
                 onValueChange = { description = it },
@@ -93,3 +87,4 @@ fun AddExerciseScreen(
         }
     }
 }
+

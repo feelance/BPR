@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -42,31 +43,24 @@ fun DayRoutineScreen(
         viewModel.fetchDayRoutines(weekRoutineId)
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Day Routines") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        },
+    ThemedScaffold(
+        title = "Day Routines",
+        navController = navController,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // Handle FAB click, e.g., navigate to an Add Day Routine screen
+                    // Navigate to Add Day Routine screen
                     navController.navigate("add_day_routine/$weekRoutineId")
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
         }
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(16.dp)
         ) {
             Text("Day Routines for $dayRoutineName", style = MaterialTheme.typography.h6)
@@ -87,7 +81,7 @@ fun DayRoutineScreen(
                     )
                 }
 
-                dayRoutines.isEmpty() -> { // Check if the list is empty
+                dayRoutines.isEmpty() -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
@@ -98,7 +92,7 @@ fun DayRoutineScreen(
                             style = MaterialTheme.typography.body1
                         )
                         Button(onClick = {
-                            // Handle retry or navigation back
+                            navController.popBackStack()
                         }) {
                             Text("Go Back")
                         }
@@ -115,7 +109,6 @@ fun DayRoutineScreen(
                                 },
                                 onDeleteClick = {
                                     viewModel.deleteDayRoutine(dayRoutine.id)
-
                                 },
                                 onClick = {
                                     navController.navigate("exercises/${dayRoutine.id}/${dayRoutine.name}")
@@ -129,7 +122,6 @@ fun DayRoutineScreen(
     }
 }
 
-
 @Composable
 fun DayRoutineCard(
     dayRoutineName: String,
@@ -141,7 +133,7 @@ fun DayRoutineCard(
     Card(
         elevation = 8.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable { onClick() },
@@ -152,7 +144,6 @@ fun DayRoutineCard(
                 .fillMaxWidth()
                 .height(80.dp)
         ) {
-
             // Dark overlay for text readability
             Box(
                 modifier = Modifier
@@ -162,7 +153,6 @@ fun DayRoutineCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onClick() }
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -175,14 +165,14 @@ fun DayRoutineCard(
                 Row {
                     IconButton(onClick = onEditClick) {
                         Icon(
-                            painter = painterResource(android.R.drawable.ic_menu_edit), // Replace with your edit icon
+                            painter = painterResource(android.R.drawable.ic_menu_edit),
                             contentDescription = "Edit",
                             tint = Color.White
                         )
                     }
                     IconButton(onClick = onDeleteClick) {
                         Icon(
-                            painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
+                            painter = painterResource(android.R.drawable.ic_delete),
                             contentDescription = "Delete",
                             tint = Color.White
                         )
@@ -192,5 +182,6 @@ fun DayRoutineCard(
         }
     }
 }
+
 
 

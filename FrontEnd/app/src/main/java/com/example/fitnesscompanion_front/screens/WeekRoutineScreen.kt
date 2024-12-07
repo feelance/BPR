@@ -24,6 +24,8 @@ import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.viewmodel.WeekRoutineViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitnesscompanion_front.R
+import com.example.fitnesscompanion_front.ui.theme.StyledCard
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -33,8 +35,9 @@ fun WeekRoutineScreen(
 ) {
     val weeklyRoutines by viewModel.weekRoutines.collectAsState()
 
-    Scaffold(
-        topBar = { TopAppBar(title = { Text("Week Routines") }) },
+    ThemedScaffold(
+        title = "Week Routines",
+        navController = navController,
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.navigate("add_week_routine")
@@ -42,10 +45,16 @@ fun WeekRoutineScreen(
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Routine")
             }
         }
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+        ) {
             Text("Your Weekly Routine", style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(16.dp))
+
             if (weeklyRoutines.isEmpty()) {
                 Text(
                     "No routines available. Add one using the button below.",
@@ -62,7 +71,6 @@ fun WeekRoutineScreen(
                             },
                             onDeleteClick = {
                                 viewModel.deleteRoutine(routine.id)
-
                             },
                             onClick = {
                                 navController.navigate("day_routines/${routine.id}/${routine.name}")
@@ -82,59 +90,32 @@ fun RoutineCard(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    Card(
-        elevation = 8.dp,
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable { onClick() },
-        backgroundColor = Color.DarkGray
+    StyledCard(
+        onClick = onClick
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
+        Column(
+            modifier = Modifier.weight(1f)
         ) {
-
-            // Dark overlay for text readability
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
+            Text(
+                text = routineText,
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.onSurface // Use high-contrast text color
             )
-
-            // Text content and action buttons
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Text(
-                        text = routineText,
-                        style = MaterialTheme.typography.h6,
-                        color = Color.White
-                    )
-                }
-                Row {
-                    IconButton(onClick = onEditClick) {
-                        Icon(
-                            painter = painterResource(android.R.drawable.ic_menu_edit), // Replace with your edit icon
-                            contentDescription = "Edit",
-                            tint = Color.White
-                        )
-                    }
-                    IconButton(onClick = onDeleteClick) {
-                        Icon(
-                            painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
-                            contentDescription = "Delete",
-                            tint = Color.White
-                        )
-                    }
-                }
+        }
+        Row {
+            IconButton(onClick = onEditClick) {
+                Icon(
+                    painter = painterResource(android.R.drawable.ic_menu_edit),
+                    contentDescription = "Edit",
+                    tint = MaterialTheme.colors.primary // Use primary color for icons
+                )
+            }
+            IconButton(onClick = onDeleteClick) {
+                Icon(
+                    painter = painterResource(android.R.drawable.ic_delete),
+                    contentDescription = "Delete",
+                    tint = MaterialTheme.colors.error // Use error color for delete icon
+                )
             }
         }
     }

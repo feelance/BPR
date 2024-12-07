@@ -80,5 +80,16 @@ public class ExerciseRecordController {
         exerciseRecordService.deleteExerciseRecord(id);
         return new ResponseEntity<>("Exercise record with id " + id + " deleted", HttpStatus.OK);
     }
+
+    /**
+     * Get an exercise record by id
+     * @param id of the exercise record
+     * @return ExerciseRecord
+     */
+    @GetMapping("/byExerciseId/{id}")
+    public List<ExerciseRecord>getExerciseRecordByExerciseIdId(@PathVariable Long id) {
+        List<ExerciseRecord> records = exerciseRecordService.getExerciseRecordByExerciseId(id);
+            return new ResponseEntity<>(records, HttpStatus.OK).getBody();
+    }
 }
 

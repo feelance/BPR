@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExerciseRecordServiceImpl implements ExerciseRecordService {
@@ -61,5 +62,14 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
         }
         recordRepository.deleteById(id);
     }
+
+    @Override
+    public List<ExerciseRecord> getExerciseRecordByExerciseId(Long id) {
+        List<ExerciseRecordEntity> recordEntities = recordRepository.findByExerciseId(id);
+        return recordEntities.stream()
+                .map(mapper::mapToExerciseRecord) // Assuming this maps Entity to DTO
+                .collect(Collectors.toList()); // Collect stream into a List
+    }
+
 }
 

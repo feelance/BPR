@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.fitnesscompanion_front.Screen
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 
@@ -37,35 +38,28 @@ fun ExerciseScreen(
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
-    // Fetch data when screen starts
+    // Fetch data when the screen starts
     LaunchedEffect(Unit) {
         viewModel.fetchExercises()
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Exercises") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        },
+    ThemedScaffold(
+        title = "Exercises",
+        navController = navController,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     navController.navigate("add_exercise/$dayRoutineId")
-                }
+                },
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
         }
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(16.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
@@ -73,15 +67,13 @@ fun ExerciseScreen(
             when {
                 isLoading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
                     )
                 }
 
                 errorMessage != null -> {
                     Text(
                         text = errorMessage ?: "Error",
-                        style = MaterialTheme.typography.body1,
-                        color = MaterialTheme.colors.error
                     )
                 }
 
@@ -93,10 +85,9 @@ fun ExerciseScreen(
                     ) {
                         Text(
                             text = "No exercises yet!",
-                            style = MaterialTheme.typography.body1
                         )
                         Button(onClick = {
-                            // Handle retry or navigation back
+                            navController.popBackStack()
                         }) {
                             Text("Go Back")
                         }
@@ -130,13 +121,17 @@ fun ExerciseScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colors.background
+                )
             ) {
                 Text("Start Workout")
             }
         }
     }
 }
+
 
 
 

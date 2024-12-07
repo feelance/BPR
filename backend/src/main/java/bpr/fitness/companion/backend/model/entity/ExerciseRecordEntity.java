@@ -1,7 +1,11 @@
 package bpr.fitness.companion.backend.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -13,10 +17,22 @@ public class ExerciseRecordEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "exerciseRecord", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Set<ExerciseEntity> exercise;
+    @Column(nullable = false)
+    private BigDecimal weight;
+
+    @Column(nullable = false)
+    private Integer repetitions;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private ExerciseEntity exercise;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private AccountEntity account;
+
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 }
