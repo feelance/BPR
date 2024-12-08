@@ -19,13 +19,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+import androidx.compose.foundation.border
+
 @Composable
 fun StyledCard(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colorScheme.primary, // Blue background
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer, // Blue background
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,  // Text and icon color on blue background
     elevation: Dp = 8.dp,
     contentPadding: PaddingValues = PaddingValues(16.dp),
+    borderColor: Color = Color.White, // White border
+    borderWidth: Dp = 2.dp, // Border width
     onClick: () -> Unit = {},
     content: @Composable RowScope.() -> Unit
 ) {
@@ -35,10 +39,11 @@ fun StyledCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
+            .border(borderWidth, borderColor, RoundedCornerShape(8.dp)) // Add border with white color
             .clickable { onClick() },
         colors = CardDefaults.cardColors(
-            containerColor = backgroundColor, // Blue background color
-            contentColor = contentColor       // Contrasting content color
+            containerColor = backgroundColor,
+            contentColor = contentColor
         )
     ) {
         Row(
@@ -51,6 +56,7 @@ fun StyledCard(
         )
     }
 }
+
 
 
 

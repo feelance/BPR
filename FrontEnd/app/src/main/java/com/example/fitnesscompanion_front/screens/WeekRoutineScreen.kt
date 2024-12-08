@@ -52,7 +52,7 @@ fun WeekRoutineScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            Text("Your Weekly Routine", style = MaterialTheme.typography.h6)
+            Text("Your Weekly Routine", style = MaterialTheme.typography.h6, color = androidx.compose.material3.MaterialTheme.colorScheme.onPrimary)
             Spacer(modifier = Modifier.height(16.dp))
 
             if (weeklyRoutines.isEmpty()) {
@@ -99,7 +99,7 @@ fun RoutineCard(
             Text(
                 text = routineText,
                 style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onSurface // Use high-contrast text color
+                color = MaterialTheme.colors.onPrimary // Use high-contrast text color
             )
         }
         Row {
@@ -107,7 +107,7 @@ fun RoutineCard(
                 Icon(
                     painter = painterResource(android.R.drawable.ic_menu_edit),
                     contentDescription = "Edit",
-                    tint = MaterialTheme.colors.primary // Use primary color for icons
+                    tint = MaterialTheme.colors.onPrimary // Use primary color for icons
                 )
             }
             IconButton(onClick = onDeleteClick) {

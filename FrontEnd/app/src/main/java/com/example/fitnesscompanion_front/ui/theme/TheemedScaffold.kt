@@ -30,7 +30,6 @@ fun ThemedScaffold(
     floatingActionButton: @Composable (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    if (floatingActionButton != null) {
         Scaffold(
             topBar = {
                 (if (showBackButton) {
@@ -53,7 +52,8 @@ fun ThemedScaffold(
                     )
                 }
             },
-            floatingActionButton = floatingActionButton, // Pass floatingActionButton to Scaffold
+
+            floatingActionButton = floatingActionButton ?: {}, // Pass empty composable if null
             containerColor = Color(0xFFE3F2FD), // Light blue background color
             content = { paddingValues ->
                 // Debugging: Add placeholder to see if content is working
@@ -68,6 +68,7 @@ fun ThemedScaffold(
             }
         )
     }
-}
+
+
 
 

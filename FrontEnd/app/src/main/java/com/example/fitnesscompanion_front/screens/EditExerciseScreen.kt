@@ -2,18 +2,20 @@ package com.example.fitnesscompanion_front.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.Screen
 import com.example.fitnesscompanion_front.model.Exercise
 import com.example.fitnesscompanion_front.model.request.ExerciseRequest
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -51,51 +53,80 @@ fun EditExerciseScreen(
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Edit Exercise") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        }
-    ) {
+    // Use ThemedScaffold instead of Scaffold
+    ThemedScaffold(
+        title = "Edit Exercise",
+        navController = navController,
+        showBackButton = true,
+        floatingActionButton = null
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(16.dp)
         ) {
             // TextField for Exercise Name
-            TextField(
+            OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
                 label = { Text("Exercise Name") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 1,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Gray,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.Gray,
+                    cursorColor = Color.White,
+                    errorCursorColor = Color.Red
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 
             // TextField for Exercise Category
-            TextField(
+            OutlinedTextField(
                 value = category,
                 onValueChange = { category = it },
                 label = { Text("Exercise Category") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 1,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Gray,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.Gray,
+                    cursorColor = Color.White,
+                    errorCursorColor = Color.Red
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 
             // TextField for Exercise Description
-            TextField(
+            OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Description") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 1,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Gray,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.Gray,
+                    cursorColor = Color.White,
+                    errorCursorColor = Color.Red
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Update Button
+            // Update Button with custom colors
             Button(
                 onClick = {
                     if (name.isNotBlank() && category.isNotBlank()) {
@@ -111,7 +142,11 @@ fun EditExerciseScreen(
                         // Handle empty input (e.g., show a Snackbar or error message)
                     }
                 },
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Blue, // Custom background color
+                    contentColor = Color.White // Custom text color
+                )
             ) {
                 Text("Update")
             }

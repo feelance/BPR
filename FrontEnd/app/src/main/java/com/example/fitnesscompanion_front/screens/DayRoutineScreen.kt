@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.fitnesscompanion_front.ui.theme.StyledCard
 import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 
@@ -63,7 +64,7 @@ fun DayRoutineScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            Text("Day Routines for $dayRoutineName", style = MaterialTheme.typography.h6)
+            Text("Day Routines for $dayRoutineName", style = MaterialTheme.typography.h6, color = androidx.compose.material3.MaterialTheme.colorScheme.onPrimary)
             Spacer(modifier = Modifier.height(16.dp))
 
             when {
@@ -105,7 +106,7 @@ fun DayRoutineScreen(
                             DayRoutineCard(
                                 dayRoutineName = dayRoutine.name,
                                 onEditClick = {
-                                    navController.navigate("edit_day_routine/$weekRoutineId/${dayRoutine.id}")
+                                    navController.navigate("edit_day_routine/2/2")
                                 },
                                 onDeleteClick = {
                                     viewModel.deleteDayRoutine(dayRoutine.id)
@@ -130,38 +131,18 @@ fun DayRoutineCard(
     onDeleteClick: () -> Unit = {},
     onClick: () -> Unit = {}
 ) {
-    Card(
-        elevation = 8.dp,
-        shape = RoundedCornerShape(8.dp),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable { onClick() },
-        backgroundColor = Color.DarkGray
+    StyledCard(
+        onClick = onClick
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-        ) {
-            // Dark overlay for text readability
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.weight(1f)
             ) {
-                Text(
-                    text = dayRoutineName,
-                    style = MaterialTheme.typography.h6,
-                    color = Color.White
-                )
+            Text(
+                text = dayRoutineName,
+                style = MaterialTheme.typography.h6,
+                color = Color.White
+            )
+        }
                 Row {
                     IconButton(onClick = onEditClick) {
                         Icon(
@@ -174,14 +155,14 @@ fun DayRoutineCard(
                         Icon(
                             painter = painterResource(android.R.drawable.ic_delete),
                             contentDescription = "Delete",
-                            tint = Color.White
+                            tint = Color.Red
                         )
                     }
                 }
             }
         }
-    }
-}
+
+
 
 
 

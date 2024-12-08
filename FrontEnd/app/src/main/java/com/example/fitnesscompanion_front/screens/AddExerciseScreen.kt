@@ -30,7 +30,10 @@ fun AddExerciseScreen(
 
     ThemedScaffold(
         title = "Add Exercise",
-        navController = navController
+        navController = navController,
+        showBackButton = true,
+        floatingActionButton = null
+
     ) { paddingValues ->
         Column(
             modifier = Modifier

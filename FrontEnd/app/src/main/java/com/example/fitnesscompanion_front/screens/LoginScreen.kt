@@ -1,5 +1,6 @@
 package com.example.fitnesscompanion_front.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +19,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.fitnesscompanion_front.R
 
 @Composable
 fun LoginScreen(onLoginSuccess: () -> Unit) {
@@ -30,6 +35,16 @@ fun LoginScreen(onLoginSuccess: () -> Unit) {
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.fitness_companion), // Replace with your background image resource
+            contentDescription = "Background",
+            modifier = Modifier
+                .fillMaxWidth() // Make the image take the full width of the screen
+                .height(LocalConfiguration.current.screenHeightDp.dp / 3), // Make the height half of the screen height
+            alignment = Alignment.Center,
+            contentScale = ContentScale.FillBounds // Ensures the image stretches to fill the container
+
+        )
         TextField(
             value = email,
             onValueChange = { email = it },

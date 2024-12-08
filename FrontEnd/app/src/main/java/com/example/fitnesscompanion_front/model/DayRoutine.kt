@@ -5,5 +5,5 @@ data class DayRoutine (
     val exercises:List<Exercise> = emptyList(),
     val weekRoutineId : Int,
     val name : String,
-    val notes:String
+    val notes:String = ""
 )

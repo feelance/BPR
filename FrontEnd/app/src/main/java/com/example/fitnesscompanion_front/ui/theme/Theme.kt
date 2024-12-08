@@ -26,9 +26,9 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF1E1E2F), // Dark slate for primary elements
+    primary = Color(0xFF000000), // Dark slate for primary elements
     onPrimary = Color(0xFFE0E0E0), // Light gray text/icons on dark slate
-    primaryContainer = Color(0xFF2D2D44), // Slightly lighter slate for containers
+    primaryContainer = Color(0xFF020202), // Slightly lighter slate for containers
     onPrimaryContainer = Color(0xFFD6D6D6), // Medium-light gray text/icons on slate
 
     background = Color(0xFF121212), // True black for the background
@@ -39,7 +39,7 @@ val LightColorScheme = lightColorScheme(
 
     secondary = Color(0xFF4A4A72), // Muted blue-gray for secondary elements
     onSecondary = Color(0xFFE0E0E0), // Light gray text/icons on blue-gray
-    secondaryContainer = Color(0xFF3A3A52), // Even darker blue-gray for containers
+    secondaryContainer = Color(0xFF090909), // Even darker blue-gray for containers
     onSecondaryContainer = Color(0xFFDADADA), // Light gray on blue-gray
 
     tertiary = Color(0xFF616161), // Neutral gray for tertiary accents

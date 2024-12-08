@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.fitnesscompanion_front.Screen
+import com.example.fitnesscompanion_front.ui.theme.StyledCard
 import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
@@ -141,35 +142,9 @@ fun ExerciseCard(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    Card(
+    StyledCard(
         elevation = 8.dp,
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        backgroundColor = Color.DarkGray
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-        ) {
-
-            // Dark overlay for text readability
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
-            )
-
-            // Text content and action buttons
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
                 Column {
                     Text(
                         text = exerciseName,
@@ -189,12 +164,12 @@ fun ExerciseCard(
                         Icon(
                             painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
                             contentDescription = "Delete",
-                            tint = Color.White
+                            tint = Color.Red
                         )
                     }
                 }
             }
         }
-    }
-}
+
+
 

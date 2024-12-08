@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material3.OutlinedTextField;
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
@@ -19,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.fitnesscompanion_front.model.ExerciseRecord
+import com.example.fitnesscompanion_front.ui.theme.StyledCard
+import com.example.fitnesscompanion_front.ui.theme.ThemedScaffold
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -44,18 +47,11 @@ fun WorkoutScreen(
         viewModel.fetchExerciseRecords()
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Workout") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        }
-    ) {
+    ThemedScaffold(
+        title = "Workout",
+        navController = navController,
+        showBackButton = true
+    ) { paddingValues ->
         if (isLoading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -69,11 +65,13 @@ fun WorkoutScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(paddingValues)
                     .padding(16.dp)
             ) {
                 Text(
                     text = "Exercise: ${currentExercise.name}",
                     style = MaterialTheme.typography.h6,
+                    color = Color.White,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
@@ -82,14 +80,30 @@ fun WorkoutScreen(
                     value = repetitions,
                     onValueChange = { repetitions = it },
                     label = { Text("Repetitions") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = Color.White,
+                        focusedBorderColor = Color.Gray,
+                        unfocusedBorderColor = Color.LightGray,
+                        focusedLabelColor = Color.White,
+                        unfocusedLabelColor = Color.Gray,
+                        cursorColor = Color.White
+                    )
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 OutlinedTextField(
                     value = weight,
                     onValueChange = { weight = it },
                     label = { Text("Weight (kg)") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = Color.White,
+                        focusedBorderColor = Color.Gray,
+                        unfocusedBorderColor = Color.LightGray,
+                        focusedLabelColor = Color.White,
+                        unfocusedLabelColor = Color.Gray,
+                        cursorColor = Color.White
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -108,7 +122,11 @@ fun WorkoutScreen(
                             feedbackMessage = "Please fill out both fields."
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Gray, // Button background color
+                        contentColor = Color.White // Button text color
+                    )
                 ) {
                     Text("Save Record")
                 }
@@ -117,7 +135,7 @@ fun WorkoutScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = it,
-                        color = MaterialTheme.colors.primary,
+                        color = Color.White,
                         style = MaterialTheme.typography.body2
                     )
                 }
@@ -128,6 +146,7 @@ fun WorkoutScreen(
                 Text(
                     text = "Saved Records:",
                     style = MaterialTheme.typography.subtitle1,
+                    color = Color.White,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
@@ -143,7 +162,10 @@ fun WorkoutScreen(
                         }
                     }
                 } else {
-                    Text("No records saved for this exercise.")
+                    Text(
+                        "No records saved for this exercise.",
+                        color = Color.White
+                    )
                 }
 
                 // Navigation buttons
@@ -161,7 +183,11 @@ fun WorkoutScreen(
                                 weight = ""
                             }
                         },
-                        enabled = currentExerciseIndex > 0
+                        enabled = currentExerciseIndex > 0,
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color.DarkGray,
+                            contentColor = Color.White
+                        )
                     ) {
                         Text("Previous Exercise")
                     }
@@ -177,7 +203,11 @@ fun WorkoutScreen(
                                 feedbackMessage = "Workout completed!"
                             }
                         },
-                        enabled = currentExerciseIndex < exercises.lastIndex
+                        enabled = currentExerciseIndex < exercises.lastIndex,
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color.DarkGray,
+                            contentColor = Color.White
+                        )
                     ) {
                         Text("Next Exercise")
                     }
@@ -188,11 +218,16 @@ fun WorkoutScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text("No exercises available for this routine.")
+                Text(
+                    text = "No exercises available for this routine.",
+                    color = Color.White
+                )
             }
         }
     }
 }
+
+
 
 
 @Composable
@@ -203,75 +238,48 @@ fun ExerciseRecordCard(
     onDeleteClick: () -> Unit = {},
     onClick: () -> Unit = {}
 ) {
-    Card(
-        elevation = 8.dp,
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable { onClick() },
-        backgroundColor = Color.DarkGray
+    StyledCard(
+        onClick = onClick
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-        ) {
-
-            // Dark overlay for text readability
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
+        // Exercise details
+        Column {
+            Text(
+                text = "Reps: ${record.repetitions}",
+                style = MaterialTheme.typography.body1,
+                color = Color.White
             )
+            Text(
+                text = "Weight: ${record.weight} kg",
+                style = MaterialTheme.typography.body2,
+                color = Color.White
+            )
+            Text(
+                text = "Date: ${record.date}",
+                style = MaterialTheme.typography.body2,
+                color = Color.White
+            )
+        }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Exercise details
-                Column {
-                    Text(
-                        text = "Reps: ${record.repetitions}",
-                        style = MaterialTheme.typography.body1,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Weight: ${record.weight} kg",
-                        style = MaterialTheme.typography.body2,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Date: ${record.date}",
-                        style = MaterialTheme.typography.body2,
-                        color = Color.White
-                    )
-                }
-
-                // Edit and Delete buttons
-                Row {
-                    IconButton(onClick = onEditClick) {
-                        Icon(
-                            painter = painterResource(android.R.drawable.ic_menu_edit), // Replace with your edit icon
-                            contentDescription = "Edit",
-                            tint = Color.White
-                        )
-                    }
-                    IconButton(onClick = onDeleteClick) {
-                        Icon(
-                            painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
-                            contentDescription = "Delete",
-                            tint = Color.White
-                        )
-                    }
-                }
+        // Edit and Delete buttons
+        Row {
+            IconButton(onClick = onEditClick) {
+                Icon(
+                    painter = painterResource(android.R.drawable.ic_menu_edit), // Replace with your edit icon
+                    contentDescription = "Edit",
+                    tint = Color.White
+                )
+            }
+            IconButton(onClick = onDeleteClick) {
+                Icon(
+                    painter = painterResource(android.R.drawable.ic_delete), // Replace with your delete icon
+                    contentDescription = "Delete",
+                    tint = Color.White
+                )
             }
         }
     }
 }
+
 
 
 

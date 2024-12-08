@@ -31,7 +31,10 @@ fun AddWeekRoutineScreen(
 
     ThemedScaffold(
         title = "Add Week Routine",
-        navController = navController
+        navController = navController,
+        showBackButton = true,
+        floatingActionButton = null
+
     ) { paddingValues ->
         Column(
             modifier = Modifier

@@ -1,5 +1,8 @@
 package com.example.fitnesscompanion_front.navigation
 
+import EditDayRoutineScreen
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -20,8 +23,8 @@ import com.example.fitnesscompanion_front.Screen
 import com.example.fitnesscompanion_front.screens.AddDayRoutineScreen
 import com.example.fitnesscompanion_front.screens.AddExerciseScreen
 import com.example.fitnesscompanion_front.screens.AddWeekRoutineScreen
+import com.example.fitnesscompanion_front.screens.CalendarScreen
 import com.example.fitnesscompanion_front.screens.DayRoutineScreen
-import com.example.fitnesscompanion_front.screens.EditDayRoutineScreen
 import com.example.fitnesscompanion_front.screens.EditExerciseScreen
 import com.example.fitnesscompanion_front.screens.EditWeekRoutineScreen
 import com.example.fitnesscompanion_front.screens.ExerciseScreen
@@ -33,7 +36,9 @@ import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModel
 import com.example.fitnesscompanion_front.viewmodel.DayRoutineViewModelFactory
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModel
 import com.example.fitnesscompanion_front.viewmodel.ExerciseViewModelFactory
+import java.time.YearMonth
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -68,6 +73,15 @@ fun AppNavigation() {
             composable(Screen.WeeklyRoutine.route) {
                 WeekRoutineScreen(navController = navController)
             }
+            val currentMonth = YearMonth.now()
+            val hardcodedWorkouts = listOf(
+                currentMonth.atDay(3), // Example: 3rd of this month
+                currentMonth.atDay(7), // Example: 7th of this month
+                currentMonth.atDay(15), // Example: 15th of this month
+                currentMonth.atDay(18), // Example: 22nd of this month
+                currentMonth.atDay(16)  // Example: 28th of this month
+            )
+            composable(Screen.Calendar.route) { CalendarScreen(hardcodedWorkouts) }
             composable(
                 route = "day_routines/{weekRoutineId}/{routineName}",
                 arguments = listOf(
@@ -159,7 +173,7 @@ fun AppNavigation() {
                 val weekRoutineId = backStackEntry.arguments?.getInt("routineId") ?: 0
                 val dayRoutineId = backStackEntry.arguments?.getInt("dayRoutineId") ?: 0
                 val viewModel: DayRoutineViewModel = viewModel(factory = DayRoutineViewModelFactory(weekRoutineId))
-                EditDayRoutineScreen(navController = navController, dayRoutineId, viewModel)
+                EditDayRoutineScreen(navController, dayRoutineId, viewModel)
             }
 
             composable(
