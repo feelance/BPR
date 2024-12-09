@@ -2,12 +2,14 @@ package com.example.fitnesscompanion_front.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -46,7 +48,17 @@ fun AddExerciseScreen(
                 value = name,
                 onValueChange = { name = it },
                 label = { Text("Exercise Name") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Gray,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.Gray,
+                    cursorColor = Color.White,
+                    errorCursorColor = Color.Red
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -55,7 +67,17 @@ fun AddExerciseScreen(
                 value = category,
                 onValueChange = { category = it },
                 label = { Text("Exercise Category") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Gray,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.Gray,
+                    cursorColor = Color.White,
+                    errorCursorColor = Color.Red
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -64,7 +86,17 @@ fun AddExerciseScreen(
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Description") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Gray,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.Gray,
+                    cursorColor = Color.White,
+                    errorCursorColor = Color.Red
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -83,7 +115,12 @@ fun AddExerciseScreen(
                         // Handle empty input (e.g., show a Snackbar or error message)
                     }
                 },
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor  = Color.Blue, // Change button background color
+                    contentColor = Color.White // Change text color on the button
+                ),
+                shape = MaterialTheme.shapes.medium // Customize the button shape
             ) {
                 Text("Save")
             }

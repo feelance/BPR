@@ -48,8 +48,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     BottomNavigation(
-        backgroundColor = MaterialTheme.colors.onBackground,  // Set the background to black
-        elevation = 12.dp  // Added subtle shadow for a floating effect
+        backgroundColor = MaterialTheme.colors.onBackground,
+        elevation = 12.dp
     ) {
         BottomNavigationItem(
             icon = {
@@ -59,10 +59,10 @@ fun BottomNavigationBar(navController: NavController) {
                     tint = Color.Gray
                 )
             },
-            selected = false,  // Dynamically control this with state
+            selected = false,
             onClick = { navController.navigate(Screen.Home.route) },
-            selectedContentColor = PrimaryGrey,  // Grey for selected icon
-            unselectedContentColor = LightGreySurface  // Lighter grey for unselected
+            selectedContentColor = PrimaryGrey,
+            unselectedContentColor = LightGreySurface
         )
         BottomNavigationItem(
             icon = {
@@ -72,23 +72,23 @@ fun BottomNavigationBar(navController: NavController) {
                     tint = Color.Gray
                 )
             },
-            selected = false,  // Dynamically control this with state
+            selected = false,
             onClick = { navController.navigate(Screen.WeeklyRoutine.route) },
-            selectedContentColor = PrimaryGrey,  // Grey for selected icon
-            unselectedContentColor = LightGreySurface  // Lighter grey for unselected
+            selectedContentColor = PrimaryGrey,
+            unselectedContentColor = LightGreySurface
         )
         BottomNavigationItem(
             icon = {
                 Icon(
-                    imageVector = Icons.Default.DateRange,  // Calendar icon
+                    imageVector = Icons.Default.DateRange,
                     contentDescription = "Calendar",
                     tint = Color.Gray
                 )
             },
-            selected = false,  // Dynamically control this with state
-            onClick = { navController.navigate(Screen.Calendar.route) },  // Navigate to the calendar screen
-            selectedContentColor = PrimaryGrey,  // Grey for selected icon
-            unselectedContentColor = LightGreySurface  // Lighter grey for unselected
+            selected = false,
+            onClick = { navController.navigate(Screen.Calendar.route) },
+            selectedContentColor = PrimaryGrey,
+            unselectedContentColor = LightGreySurface
         )
     }
 }

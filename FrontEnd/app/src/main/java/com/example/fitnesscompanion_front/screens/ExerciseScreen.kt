@@ -34,12 +34,10 @@ fun ExerciseScreen(
     dayRoutineId: Int,
     viewModel: ExerciseViewModel = viewModel()
 ) {
-    // Observe ViewModel state
     val exercises by viewModel.exercises.collectAsState()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
-    // Fetch data when the screen starts
     LaunchedEffect(Unit) {
         viewModel.fetchExercises()
     }
@@ -94,10 +92,9 @@ fun ExerciseScreen(
                         }
                     }
                 }
-
                 else -> {
                     LazyColumn(
-                        modifier = Modifier.weight(1f) // Adjust height to leave space for the button
+                        modifier = Modifier.weight(1f)
                     ) {
                         items(exercises) { exercise ->
                             ExerciseCard(
@@ -114,7 +111,6 @@ fun ExerciseScreen(
                 }
             }
 
-            // "Start Workout" button at the bottom
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {

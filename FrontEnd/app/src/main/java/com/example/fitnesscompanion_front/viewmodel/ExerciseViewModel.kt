@@ -47,6 +47,8 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
             try {
                 val response = RetrofitInstance.exerciseApi.getExerciseById(exerciseId)
                 _selectedExercise.value = response
+                _feedbackMessage.value = "dsds"
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -165,6 +167,12 @@ class ExerciseViewModel(private val dayRoutineId: Int) : ViewModel() {
             }
         }
     }
+    fun setSelectedExerciseByIndex(index: Int) {
+        if (index in _exercises.value.indices) {
+            _selectedExercise.value = _exercises.value[index]
+            fetchExerciseRecords()
+        }
+    }
 
 
 }
@@ -177,3 +185,5 @@ class ExerciseViewModelFactory(private val dayRoutineId: Int) : ViewModelProvide
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+
+

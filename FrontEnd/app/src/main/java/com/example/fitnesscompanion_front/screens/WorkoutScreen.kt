@@ -31,7 +31,7 @@ fun WorkoutScreen(
     dayRoutineId: Int,
     viewModel: ExerciseViewModel = viewModel()
 ) {
-    var currentExerciseIndex by remember { mutableStateOf(0) }
+    var currentExerciseIndex by remember { mutableIntStateOf(0) }
 
     // Fetch exercises for the routine
     val exercises by viewModel.exercises.collectAsState()
@@ -181,6 +181,7 @@ fun WorkoutScreen(
                                 feedbackMessage = null
                                 repetitions = ""
                                 weight = ""
+                                viewModel.setSelectedExerciseByIndex(currentExerciseIndex)
                             }
                         },
                         enabled = currentExerciseIndex > 0,
@@ -199,6 +200,8 @@ fun WorkoutScreen(
                                 feedbackMessage = null
                                 repetitions = ""
                                 weight = ""
+                                viewModel.setSelectedExerciseByIndex(currentExerciseIndex)
+
                             } else {
                                 feedbackMessage = "Workout completed!"
                             }

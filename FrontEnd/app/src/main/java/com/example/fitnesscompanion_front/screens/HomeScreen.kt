@@ -42,14 +42,10 @@ fun HomeScreen(navController: NavController) {
             )
         }
     ) {
-        // Box to layer the background image and content
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-
-
-            // Content on top of the background
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -60,8 +56,8 @@ fun HomeScreen(navController: NavController) {
                 // Welcome text
                 Text(
                     text = "Welcome to the Fitness App!",
-                    style = MaterialTheme.typography.headlineMedium, // Material3 typography
-                    color = MaterialTheme.colorScheme.onPrimary, // High-contrast text color
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .padding(8.dp)

@@ -24,12 +24,12 @@ import androidx.compose.foundation.border
 @Composable
 fun StyledCard(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer, // Blue background
-    contentColor: Color = MaterialTheme.colorScheme.onPrimary,  // Text and icon color on blue background
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     elevation: Dp = 8.dp,
     contentPadding: PaddingValues = PaddingValues(16.dp),
-    borderColor: Color = Color.White, // White border
-    borderWidth: Dp = 2.dp, // Border width
+    borderColor: Color = Color.White,
+    borderWidth: Dp = 2.dp,
     onClick: () -> Unit = {},
     content: @Composable RowScope.() -> Unit
 ) {
@@ -39,7 +39,7 @@ fun StyledCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .border(borderWidth, borderColor, RoundedCornerShape(8.dp)) // Add border with white color
+            .border(borderWidth, borderColor, RoundedCornerShape(8.dp))
             .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor,

@@ -29,4 +29,19 @@ object RetrofitInstance {
             .build()
             .create(ExerciseApi::class.java)
     }
+
+
+}
+
+object RetrofitTest {
+    var exerciseApi: ExerciseApi = createRetrofitInstance().create(ExerciseApi::class.java)
+    var dayRoutineApi: DayRoutineApi = createRetrofitInstance().create(DayRoutineApi::class.java)
+    var weekRoutineApi: WeekRoutineApi = createRetrofitInstance().create(WeekRoutineApi::class.java)
+}
+
+fun createRetrofitInstance(): Retrofit {
+    return Retrofit.Builder()
+        .baseUrl("http://10.0.2.2:8080") // Replace with your API base URL
+        .addConverterFactory(GsonConverterFactory.create()) // For JSON parsing
+        .build()
 }
