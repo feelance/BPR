@@ -65,3 +65,16 @@ packages/react-devtools-shell/dist
 packages/react-devtools-timeline/dist
 Project diagrams24.11.asta
 Project diagrams24.11.asta.lock
+*.properties
+*.lock
+BPRFront/.gradle/8.7/checksums/md5-checksums.bin
+BPRFront/.gradle/8.7/checksums/sha1-checksums.bin
+BPRFront/.gradle/8.7/dependencies-accessors/4b7650b75e0815063ed8af2850c9b7999d3acbfb/metadata.bin
+BPRFront/.gradle/8.7/dependencies-accessors/4b7650b75e0815063ed8af2850c9b7999d3acbfb/sources/org/gradle/accessors/dm/LibrariesForLibs.java
+BPRFront/.gradle/8.7/dependencies-accessors/4b7650b75e0815063ed8af2850c9b7999d3acbfb/sources/org/gradle/accessors/dm/LibrariesForLibsInPluginsBlock.java
+BPRFront/.gradle/8.7/executionHistory/executionHistory.bin
+BPRFront/.gradle/8.7/fileChanges/last-build.bin
+BPRFront/.gradle/8.7/fileHashes/fileHashes.bin
+BPRFront/.gradle/8.7/fileHashes/resourceHashesCache.bin
+BPRFront/.gradle/buildOutputCleanup/outputFiles.bin
+BPRFront/.gradle/file-system.probe
